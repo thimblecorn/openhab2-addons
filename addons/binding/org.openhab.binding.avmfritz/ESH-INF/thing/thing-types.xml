@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
 
     <!-- Supported Fritz! devices and features -->
-    <thing-type id="COMET_DECT">
+    <thing-type id="Comet_DECT">
         <supported-bridge-type-refs>
             <bridge-type-ref id="fritzbox" />
         </supported-bridge-type-refs>

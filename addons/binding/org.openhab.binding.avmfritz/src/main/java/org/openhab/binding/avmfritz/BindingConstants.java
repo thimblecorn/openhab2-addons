@@ -38,7 +38,7 @@ public class BindingConstants {
 	public static final String DEVICE_DECT100 = "FRITZ_DECT_Repeater_100";
 	public static final String DEVICE_PL546E = "FRITZ_Powerline_546E";
 	public static final String DEVICE_PL546E_STANDALONE = "FRITZ_Powerline_546E_Solo";
-	public static final String DEVICE_COMETDECT = "Comet DECT";
+	public static final String DEVICE_COMETDECT = "Comet_DECT";
 
 	// List of all Thing Type UIDs
 	public final static ThingTypeUID BRIDGE_THING_TYPE = new ThingTypeUID(BINDING_ID, BRIDGE_FRITZBOX);
