@@ -57,6 +57,9 @@ public class BindingConstants {
 	public final static String CHANNEL_ENERGY = "energy";
 	public final static String CHANNEL_POWER = "power";
 	public final static String CHANNEL_SWITCH = "outlet";
+	public final static String CHANNEL_ACTUALTEMP = "actual_temp";
+	public final static String CHANNEL_SETTEMP = "set_temp";
+	public final static String CHANNEL_BATTERY = "battery_low";
 
 	public final static Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = ImmutableSet.of(DECT100_THING_TYPE,
 			DECT200_THING_TYPE, DECT210_THING_TYPE, DECT300_THING_TYPE, PL546E_THING_TYPE, BRIDGE_THING_TYPE,

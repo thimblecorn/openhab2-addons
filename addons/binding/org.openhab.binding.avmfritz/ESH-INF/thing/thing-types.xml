@@ -165,6 +165,7 @@
 			</parameter>
 		</config-description>
     </thing-type>
+
     <thing-type id="FRITZ_DECT_Repeater_100">
     	<supported-bridge-type-refs>
     		<bridge-type-ref id="fritzbox" />
@@ -188,6 +189,7 @@
 		<category>Temperature</category>
 		<state pattern="%.1f °C" readOnly="true"/>
 	</channel-type>
+
 	<channel-type id="energy">
 		<item-type>Number</item-type>
 		<label>Energy Consumption</label>
@@ -195,6 +197,7 @@
 		<category>Energy</category>
 		<state pattern="%.2f kWh" readOnly="true"/>
 	</channel-type>
+
 	<channel-type id="power">
 		<item-type>Number</item-type>
 		<label>Power</label>
@@ -202,12 +205,43 @@
 		<category>Energy</category>
 		<state pattern="%.2f W" readOnly="true"/>
 	</channel-type>
+
     <channel-type id="outlet">
         <item-type>Switch</item-type>
         <label>Outlet</label>
         <description>Switched outlet</description>
         <category>PowerOutlet</category>
 		<state readOnly="false"/>
+    </channel-type>
+
+    <channel-type id="actual_temp">
+        <item-type>Number</item-type>
+        <label>Actual Temperature of heating thermostat</label>
+        <description>Actual measured temperature</description>
+        <category>Temperature</category>
+        <tags>
+            <tag>heating</tag>
+        </tags>
+        <state pattern="%.1f °C" readOnly="true"/>
+    </channel-type>
+
+    <channel-type id="set_temp">
+        <item-type>Number</item-type>
+        <label>Set Temperature of heating thermostat</label>
+        <description>Thermostat temperature setpoint</description>
+        <category>Temperature</category>
+        <tags>
+            <tag>heating</tag>
+        </tags>
+        <state min="8" max="28" step="0.5" pattern="%.1f °C" readOnly="false"/>
+    </channel-type>
+
+    <channel-type id="battery_low">
+        <item-type>Switch</item-type>
+        <label>Battery Level Low</label>
+        <description>Battery charge Level</description>
+        <category>Battery</category>
+        <state readOnly="true"></state>
     </channel-type>
 
 </thing:thing-descriptions>

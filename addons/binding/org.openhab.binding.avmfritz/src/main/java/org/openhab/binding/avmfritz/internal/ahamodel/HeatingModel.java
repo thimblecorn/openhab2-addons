@@ -26,6 +26,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 @XmlType(propOrder = { "tist", "tsoll", "komfort", "absenk", "lock", "batterylow" })
 public class HeatingModel {
 	public static final BigDecimal TEMP_FACTOR = new BigDecimal("0.5");
+	public static final BigDecimal TEMP_MIN = new BigDecimal("8.0");
+	public static final BigDecimal TEMP_MAX = new BigDecimal("28.0");
 	public static final BigDecimal ON = BigDecimal.ONE;
 	public static final BigDecimal OFF = BigDecimal.ZERO;
 

@@ -29,16 +29,19 @@ import org.slf4j.LoggerFactory;
  */
 public class FritzAhaDiscoveryCallback extends FritzAhaReauthCallback {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+
 	private AvmDiscoveryService service;
 
 	/**
 	 * Constructor
-	 * @param webIface Webinterface to FRITZ!Box
-	 * @param service Discovery service to call with result.
+	 * 
+	 * @param webIface
+	 *            Webinterface to FRITZ!Box
+	 * @param service
+	 *            Discovery service to call with result.
 	 */
 	public FritzAhaDiscoveryCallback(FritzahaWebInterface webIface, AvmDiscoveryService service) {
-		super("webservices/homeautoswitch.lua", "switchcmd=getdevicelistinfos", webIface, Method.GET, 1);
+		super(WEBSERVICE_PATH, "switchcmd=getdevicelistinfos", webIface, Method.GET, 1);
 		this.service = service;
 	}
 
@@ -51,15 +54,12 @@ public class FritzAhaDiscoveryCallback extends FritzAhaReauthCallback {
 		if (this.isValidRequest()) {
 			logger.debug("discovery callback response " + response);
 			try {
-				JAXBContext jaxbContext = JAXBContext
-						.newInstance(DevicelistModel.class);
+				JAXBContext jaxbContext = JAXBContext.newInstance(DevicelistModel.class);
 				Unmarshaller jaxbUM = jaxbContext.createUnmarshaller();
 
-				DevicelistModel model = (DevicelistModel) jaxbUM
-						.unmarshal(new StringReader(response));
-				if( model != null ) {
-					for( DeviceModel device : model.getDevicelist() )
-					{
+				DevicelistModel model = (DevicelistModel) jaxbUM.unmarshal(new StringReader(response));
+				if (model != null) {
+					for (DeviceModel device : model.getDevicelist()) {
 						this.service.onDeviceAddedInternal(device);
 					}
 				} else {
