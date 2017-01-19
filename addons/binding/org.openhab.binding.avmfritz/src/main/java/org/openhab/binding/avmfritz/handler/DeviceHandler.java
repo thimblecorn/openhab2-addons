@@ -28,6 +28,7 @@ import org.eclipse.smarthome.core.thing.ThingTypeUID;
 import org.eclipse.smarthome.core.thing.ThingUID;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandler;
 import org.eclipse.smarthome.core.types.Command;
+import org.eclipse.smarthome.core.types.RefreshType;
 import org.openhab.binding.avmfritz.BindingConstants;
 import org.openhab.binding.avmfritz.config.AvmFritzConfiguration;
 import org.openhab.binding.avmfritz.internal.ahamodel.DeviceModel;
@@ -140,6 +141,12 @@ public class DeviceHandler extends BaseThingHandler implements IFritzHandler {
 	@Override
 	public void handleCommand(ChannelUID channelUID, Command command) {
 		logger.debug("command for " + channelUID.getAsString() + ": " + command.toString());
+		if (command instanceof RefreshType) {
+			// TODO
+			// ((BoxHandler) bridge.getHandler()).handleCommand(channelUID,
+			// command);
+			return;
+		}
 		if (channelUID.getId().equals(CHANNEL_SWITCH)) {
 			logger.debug("update " + channelUID.getAsString() + " with " + command.toString());
 			FritzahaWebInterface fritzBox = null;
@@ -173,16 +180,20 @@ public class DeviceHandler extends BaseThingHandler implements IFritzHandler {
 				fritzBox = this.getWebInterface();
 			}
 			if (fritzBox != null && this.getThing().getConfiguration().get(THING_AIN) != null) {
-				BigDecimal temperature = (BigDecimal) command;
-				if (temperature.compareTo(HeatingModel.TEMP_MIN) == -1) {
-					temperature = HeatingModel.TEMP_MIN;
-				} else if (temperature.compareTo(HeatingModel.TEMP_MAX) == 1) {
-					temperature = HeatingModel.TEMP_MAX;
+				if (command instanceof DecimalType) {
+					BigDecimal temperature = new BigDecimal(command.toString());
+					if (temperature.compareTo(HeatingModel.TEMP_MIN) == -1) {
+						temperature = HeatingModel.TEMP_MIN;
+					} else if (temperature.compareTo(HeatingModel.TEMP_MAX) == 1) {
+						temperature = HeatingModel.TEMP_MAX;
+					}
+					FritzAhaSetHeatingTemperatureCallback callback = new FritzAhaSetHeatingTemperatureCallback(fritzBox,
+							this.getThing().getConfiguration().get(THING_AIN).toString(),
+							temperature.divide(HeatingModel.TEMP_FACTOR));
+					fritzBox.asyncGet(callback);
+				} else {
+					logger.error("unknown command " + command.toString() + " for channel uid " + channelUID);
 				}
-				FritzAhaSetHeatingTemperatureCallback callback = new FritzAhaSetHeatingTemperatureCallback(fritzBox,
-						this.getThing().getConfiguration().get(THING_AIN).toString(),
-						temperature.divide(HeatingModel.TEMP_FACTOR));
-				fritzBox.asyncGet(callback);
 			}
 		} else {
 			logger.error("unknown channel uid " + channelUID);
@@ -232,17 +243,17 @@ public class DeviceHandler extends BaseThingHandler implements IFritzHandler {
 					}
 				}
 				if (model.isHeatingThermostat()) {
-					Channel channelActualTemp = thing.getChannel(CHANNEL_ACTUALTEMP);
-					this.updateState(channelActualTemp.getUID(), new DecimalType(model.getHeating().getTIst()));
-					Channel channelSetTemp = thing.getChannel(CHANNEL_SETTEMP);
-					this.updateState(channelSetTemp.getUID(), new DecimalType(model.getHeating().getTSoll()));
-					Channel channelBattery = thing.getChannel(CHANNEL_BATTERY);
-					if (model.getHeating().getBatteryLow().equals(HeatingModel.ON)) {
+					Channel channelActualTemp = thing.getChannel(INPUT_ACTUALTEMP);
+					this.updateState(channelActualTemp.getUID(), new DecimalType(model.getHeating().getTist()));
+					Channel channelSetTemp = thing.getChannel(INPUT_SETTEMP);
+					this.updateState(channelSetTemp.getUID(), new DecimalType(model.getHeating().getTsoll()));
+					Channel channelBattery = thing.getChannel(INPUT_BATTERY);
+					if (model.getHeating().getBatterylow().equals(HeatingModel.ON)) {
 						this.updateState(channelBattery.getUID(), OnOffType.ON);
-					} else if (model.getHeating().getBatteryLow().equals(HeatingModel.OFF)) {
+					} else if (model.getHeating().getBatterylow().equals(HeatingModel.OFF)) {
 						this.updateState(channelBattery.getUID(), OnOffType.OFF);
 					} else {
-						logger.warn("unknown state " + model.getHeating().getBatteryLow() + " for channel "
+						logger.warn("unknown state " + model.getHeating().getBatterylow() + " for channel "
 								+ channelBattery.getUID());
 					}
 				}

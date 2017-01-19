@@ -28,6 +28,7 @@ import org.eclipse.smarthome.core.thing.ThingTypeUID;
 import org.eclipse.smarthome.core.thing.ThingUID;
 import org.eclipse.smarthome.core.thing.binding.BaseBridgeHandler;
 import org.eclipse.smarthome.core.types.Command;
+import org.eclipse.smarthome.core.types.RefreshType;
 import org.openhab.binding.avmfritz.BindingConstants;
 import org.openhab.binding.avmfritz.config.AvmFritzConfiguration;
 import org.openhab.binding.avmfritz.internal.ahamodel.DeviceModel;
@@ -225,7 +226,11 @@ public class BoxHandler extends BaseBridgeHandler implements IFritzHandler {
      */
     @Override
     public void handleCommand(ChannelUID channelUID, Command command) {
-        logger.debug("update " + channelUID.getAsString() + " with " + command.toString());
+    	logger.debug("command for " + channelUID.getAsString() + ": " + command.toString());
+        if (command instanceof RefreshType) {
+            // TODO
+            return;
+        }
     }
 
     /**

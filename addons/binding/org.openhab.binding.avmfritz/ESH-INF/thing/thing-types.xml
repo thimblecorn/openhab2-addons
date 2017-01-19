@@ -13,6 +13,9 @@
         <description>Comet DECT heating thermostat</description>
         <channels>
             <channel id="temperature" typeId="temperature" />
+            <channel id="actual_temp" typeId="actual_temp" />
+            <channel id="set_temp" typeId="set_temp" />
+            <channel id="battery_low" typeId="battery_low" />
         </channels>
         <config-description>
             <parameter name="ain" type="text" required="true">
@@ -30,6 +33,9 @@
         <description>FRITZ!DECT 300 heating thermostat</description>
         <channels>
             <channel id="temperature" typeId="temperature" />
+            <channel id="actual_temp" typeId="actual_temp" />
+            <channel id="set_temp" typeId="set_temp" />
+            <channel id="battery_low" typeId="battery_low" />
         </channels>
         <config-description>
             <parameter name="ain" type="text" required="true">

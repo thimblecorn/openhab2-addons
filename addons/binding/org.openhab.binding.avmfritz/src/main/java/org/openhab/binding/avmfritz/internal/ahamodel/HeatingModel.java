@@ -38,19 +38,19 @@ public class HeatingModel {
 	private BigDecimal lock;
 	private BigDecimal batterylow;
 
-	public BigDecimal getTIst() {
+	public BigDecimal getTist() {
 		return tist != null ? tist.multiply(TEMP_FACTOR) : BigDecimal.ZERO;
 	}
 
-	public void setTIst(BigDecimal tist) {
+	public void setTist(BigDecimal tist) {
 		this.tist = tist;
 	}
 
-	public BigDecimal getTSoll() {
+	public BigDecimal getTsoll() {
 		return tsoll != null ? tsoll.multiply(TEMP_FACTOR) : BigDecimal.ZERO;
 	}
 
-	public void setTSoll(BigDecimal tsoll) {
+	public void setTsoll(BigDecimal tsoll) {
 		this.tsoll = tsoll;
 	}
 
@@ -78,17 +78,17 @@ public class HeatingModel {
 		this.lock = lock;
 	}
 
-	public BigDecimal getBatteryLow() {
+	public BigDecimal getBatterylow() {
 		return batterylow;
 	}
 
-	public void setBatteryLow(BigDecimal batterylow) {
+	public void setBatterylow(BigDecimal batterylow) {
 		this.batterylow = batterylow;
 	}
 
 	public String toString() {
-		return new ToStringBuilder(this).append("tist", this.getTIst()).append("tsoll", this.getTSoll())
+		return new ToStringBuilder(this).append("tist", this.getTist()).append("tsoll", this.getTsoll())
 				.append("komfort", this.getKomfort()).append("absenk", this.getAbsenk()).append("lock", this.getLock())
-				.append("batterylow", this.getBatteryLow()).toString();
+				.append("batterylow", this.getBatterylow()).toString();
 	}
 }
