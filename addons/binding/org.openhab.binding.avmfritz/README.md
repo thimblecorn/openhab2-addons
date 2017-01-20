@@ -21,6 +21,10 @@ This [DECT repeater](https://avm.de/produkte/fritzdect/fritzdect-repeater-100/) 
 
 This [powerline adapter](http://avm.de/produkte/fritzpowerline/fritzpowerline-546e/) can be used via the bridge or in standalone mode. It supports switching the outlet and current power and energy consumption readings. This device does not contain a temperature sensor.
 
+### FRITZ!DECT 300 / Comet DECT
+
+These two devices [FRITZ!DECT 300](https://avm.de/produkte/fritzdect/fritzdect-300/) and [Comet DECT](https://www.eurotronic.org/produkte/comet-dect.html) ([EUROtronic Technology GmbH](https://www.eurotronic.org)) are used to regulate radiators via DECT protocol. The FRITZ!Box can handle up to twelve heating thermostats. The binding provides channels for reading and setting the temperature. Additionally you can check the bettery level of the device. The FRITZ!Box has to run at least on firmware FRITZ!OS 6.50.
+
 ## Discovery
 
 The FRITZ!Box and the powerline adapter are discovered through UPNP in the local network. When added as things, a username/password has eventually to be set depending on your Box/Powerline security configuration. The credentials given in the settings must have HomeAuto permissions.
@@ -55,23 +59,29 @@ If correct credentials are set in the bridge configuration, connected AHA device
 
 * AIN (mandatory), no default (AIN number of device)
 
-## Channels
+
+## Supported Channels
 
 | Channel Type ID | Item Type    | Description  | Available on thing |
 |-------------|--------|-----------------------------|------------------------------------|
-| temperature | Number | Actual measured temperature | FRITZ!DECT 210, FRITZ!DECT 200, FRITZ!DECT Repeater 100 |
-| energy | Number | Accumulated energy consumption | FRITZ!DECT 210, FRITZ!DECT 200, FRITZ!Powerline 546E |
-| power | Number | Current power consumption | FRITZ!DECT 210, FRITZ!DECT 200, FRITZ!Powerline 546E |
-| outlet | Switch | Switchable outlet | FRITZ!DECT 210, FRITZ!DECT 200, FRITZ!Powerline 546E |
+| temperature | Number | Actual measured temperature (in °C) | FRITZ!DECT 210, FRITZ!DECT 200, FRITZ!DECT Repeater 100, FRITZ!DECT 300, Comet DECT |
+| energy | Number | Accumulated energy consumption (in kWh) | FRITZ!DECT 210, FRITZ!DECT 200, FRITZ!Powerline 546E |
+| power | Number | Current power consumption (in W) | FRITZ!DECT 210, FRITZ!DECT 200, FRITZ!Powerline 546E |
+| outlet | Switch | Switchable outlet (ON/OFF) | FRITZ!DECT 210, FRITZ!DECT 200, FRITZ!Powerline 546E |
+| actual_temp | Number | Actual Temperature of heating thermostat (in °C) | FRITZ!DECT 300, Comet DECT |
+| set_temp | Number | Set Temperature of heating thermostat (in °C) | FRITZ!DECT 210, FRITZ!DECT 200, FRITZ!Powerline 546E |
+| battery_low | Switch | Battery Level Low (ON/OFF) | FRITZ!DECT 210, FRITZ!DECT 200, FRITZ!Powerline 546E |
+
 
 ## Full Example
 
-demo.Things:
+demo.things:
 
 ```
 Bridge avmfritz:fritzbox:1 [ ipAddress="192.168.xxx.xxx", password ="xxx", user="xxx" ] {
 	FRITZ_DECT_200 DECT1 [ ain="xxxxxxxxxxx" ]
 	FRITZ_Powerline_546E PL1 [ ain="yy:yy:yy:yy:yyy" ]
+	Comet_DECT CD1 [ ain="aaaaaabbbbbb" ]
 }
 ```
 
@@ -80,6 +90,12 @@ demo.items:
 ```
 Number Temp { channel="avmfritz:FRITZ_DECT_200:1:DECT1:temperature" }
 Switch Outlet2 { channel="avmfritz:FRITZ_Powerline_546E:1:PL1:outlet" }
+
+Group gCOMETDECT "Comet DECT heating thermostat" <temperature>
+
+Number COMETDECTActualTemp "Actual measured temperature [%.1f °C]" (gCOMETDECT) { channel="avmfritz:Comet_DECT:1:CD1:actual_temp" }
+Number COMETDECTSetTemp "Thermostat temperature setpoint [%.1f °C]" (gCOMETDECT) { channel="avmfritz:Comet_DECT:1:CD1:set_temp" }
+Switch COMETDECTBattery "Battery low" (gCOMETDECT) { channel="avmfritz:Comet_DECT:1:CD1:battery_low" }
 ```
 
 demo.sitemap:
@@ -90,6 +106,11 @@ sitemap demo label="Main Menu"
 	Frame {
 		Text item=Temp
 		Switch item=Outlet2
+	}
+	Frame "Comet DECT heating thermostat" {
+		Text item=COMETDECTActualTemp icon="temperature"
+		Setpoint item=COMETDECTSetTemp minValue=8.0 maxValue=28.0 step=0.5 icon="temperature"
+		Switch item=COMETDECTBattery icon="battery"
 	}
 }
 ```

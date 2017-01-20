@@ -60,9 +60,6 @@ public class BindingConstants {
 	public final static String CHANNEL_ACTUALTEMP = "actual_temp";
 	public final static String CHANNEL_SETTEMP = "set_temp";
 	public final static String CHANNEL_BATTERY = "battery_low";
-	// public final static String CHANNEL_ACTUALTEMP = "tist";
-	// public final static String CHANNEL_SETTEMP = "tsoll";
-	// public final static String CHANNEL_BATTERY = "batterylow";
 
 	// List of all Input tags
 	public final static String INPUT_ACTUALTEMP = "tist";
