@@ -23,7 +23,7 @@ This [powerline adapter](http://avm.de/produkte/fritzpowerline/fritzpowerline-54
 
 ### FRITZ!DECT 300 / Comet DECT
 
-These two devices [FRITZ!DECT 300](https://avm.de/produkte/fritzdect/fritzdect-300/) and [Comet DECT](https://www.eurotronic.org/produkte/comet-dect.html) ([EUROtronic Technology GmbH](https://www.eurotronic.org)) are used to regulate radiators via DECT protocol. The FRITZ!Box can handle up to twelve heating thermostats. The binding provides channels for reading and setting the temperature. Additionally you can check the bettery level of the device. The FRITZ!Box has to run at least on firmware FRITZ!OS 6.50.
+These two devices [FRITZ!DECT 300](https://avm.de/produkte/fritzdect/fritzdect-300/) and [Comet DECT](https://www.eurotronic.org/produkte/comet-dect.html) ( [EUROtronic Technology GmbH](https://www.eurotronic.org) ) are used to regulate radiators via DECT protocol. The FRITZ!Box can handle up to twelve heating thermostats. The binding provides channels for reading and setting the temperature. Additionally you can check the battery level of the device. The FRITZ!Box has to run at least on firmware FRITZ!OS 6.50.
 
 ## Discovery
 
@@ -64,10 +64,10 @@ If correct credentials are set in the bridge configuration, connected AHA device
 
 | Channel Type ID | Item Type    | Description  | Available on thing |
 |-------------|--------|-----------------------------|------------------------------------|
-| temperature | Number | Actual measured temperature (in °C) | FRITZ!DECT 210, FRITZ!DECT 200, FRITZ!DECT Repeater 100, FRITZ!DECT 300, Comet DECT |
-| energy | Number | Accumulated energy consumption (in kWh) | FRITZ!DECT 210, FRITZ!DECT 200, FRITZ!Powerline 546E |
-| power | Number | Current power consumption (in W) | FRITZ!DECT 210, FRITZ!DECT 200, FRITZ!Powerline 546E |
-| outlet | Switch | Switchable outlet (ON/OFF) | FRITZ!DECT 210, FRITZ!DECT 200, FRITZ!Powerline 546E |
+| temperature | Number | Actual measured temperature | FRITZ!DECT 210, FRITZ!DECT 200, FRITZ!DECT Repeater 100, FRITZ!DECT 300, Comet DECT |
+| energy | Number | Accumulated energy consumption | FRITZ!DECT 210, FRITZ!DECT 200, FRITZ!Powerline 546E |
+| power | Number | Current power consumption | FRITZ!DECT 210, FRITZ!DECT 200, FRITZ!Powerline 546E |
+| outlet | Switch | Switchable outlet | FRITZ!DECT 210, FRITZ!DECT 200, FRITZ!Powerline 546E |
 | actual_temp | Number | Actual Temperature of heating thermostat (in °C) | FRITZ!DECT 300, Comet DECT |
 | set_temp | Number | Set Temperature of heating thermostat (in °C) | FRITZ!DECT 210, FRITZ!DECT 200, FRITZ!Powerline 546E |
 | battery_low | Switch | Battery Level Low (ON/OFF) | FRITZ!DECT 210, FRITZ!DECT 200, FRITZ!Powerline 546E |
