@@ -28,8 +28,10 @@ public class HeatingModel {
 	public static final BigDecimal TEMP_FACTOR = new BigDecimal("0.5");
 	public static final BigDecimal TEMP_MIN = new BigDecimal("8.0");
 	public static final BigDecimal TEMP_MAX = new BigDecimal("28.0");
-	public static final BigDecimal ON = BigDecimal.ONE;
-	public static final BigDecimal OFF = BigDecimal.ZERO;
+	public static final BigDecimal TEMP_OFF = new BigDecimal("253.0");
+	public static final BigDecimal TEMP_ON = new BigDecimal("254.0");
+	public static final BigDecimal BATTERY_ON = BigDecimal.ONE;
+	public static final BigDecimal BATTERY_OFF = BigDecimal.ZERO;
 
 	private BigDecimal tist;
 	private BigDecimal tsoll;

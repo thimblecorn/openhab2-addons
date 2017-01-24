@@ -135,12 +135,12 @@ public class DeviceHandler extends BaseThingHandler implements IFritzHandler {
 	}
 
 	/**
-	 * Handle the commands for switchable outlets. TODO: test switch behaviour
-	 * on PL546E standalone
+	 * Handle the commands for switchable outlets or heating thermostats. TODO:
+	 * test switch behaviour on PL546E standalone
 	 */
 	@Override
 	public void handleCommand(ChannelUID channelUID, Command command) {
-		logger.debug("command for " + channelUID.getAsString() + ": " + command.toString());
+		logger.debug("Handle command {} for channel {}", channelUID.getIdWithoutGroup(), command.toString());
 		if (command instanceof RefreshType) {
 			// TODO
 			// ((BoxHandler) bridge.getHandler()).handleCommand(channelUID,
@@ -190,6 +190,11 @@ public class DeviceHandler extends BaseThingHandler implements IFritzHandler {
 					FritzAhaSetHeatingTemperatureCallback callback = new FritzAhaSetHeatingTemperatureCallback(fritzBox,
 							this.getThing().getConfiguration().get(THING_AIN).toString(),
 							temperature.divide(HeatingModel.TEMP_FACTOR));
+					fritzBox.asyncGet(callback);
+				} else if (command instanceof OnOffType) {
+					FritzAhaSetHeatingTemperatureCallback callback = new FritzAhaSetHeatingTemperatureCallback(fritzBox,
+							this.getThing().getConfiguration().get(THING_AIN).toString(),
+							command.equals(OnOffType.ON) ? HeatingModel.TEMP_ON : HeatingModel.TEMP_OFF);
 					fritzBox.asyncGet(callback);
 				} else {
 					logger.error("unknown command " + command.toString() + " for channel uid " + channelUID);
@@ -244,14 +249,14 @@ public class DeviceHandler extends BaseThingHandler implements IFritzHandler {
 				}
 				if (model.isHeatingThermostat()) {
 					Channel channelActualTemp = thing.getChannel(INPUT_ACTUALTEMP);
-					this.updateState(channelActualTemp.getUID(), new DecimalType(model.getHeating().getTist()));
+					this.updateState(CHANNEL_ACTUALTEMP, new DecimalType(model.getHeating().getTist()));
 					Channel channelSetTemp = thing.getChannel(INPUT_SETTEMP);
-					this.updateState(channelSetTemp.getUID(), new DecimalType(model.getHeating().getTsoll()));
+					this.updateState(CHANNEL_SETTEMP, new DecimalType(model.getHeating().getTsoll()));
 					Channel channelBattery = thing.getChannel(INPUT_BATTERY);
-					if (model.getHeating().getBatterylow().equals(HeatingModel.ON)) {
-						this.updateState(channelBattery.getUID(), OnOffType.ON);
-					} else if (model.getHeating().getBatterylow().equals(HeatingModel.OFF)) {
-						this.updateState(channelBattery.getUID(), OnOffType.OFF);
+					if (model.getHeating().getBatterylow().equals(HeatingModel.BATTERY_ON)) {
+						this.updateState(CHANNEL_BATTERY, OnOffType.ON);
+					} else if (model.getHeating().getBatterylow().equals(HeatingModel.BATTERY_OFF)) {
+						this.updateState(CHANNEL_BATTERY, OnOffType.OFF);
 					} else {
 						logger.warn("unknown state " + model.getHeating().getBatterylow() + " for channel "
 								+ channelBattery.getUID());
