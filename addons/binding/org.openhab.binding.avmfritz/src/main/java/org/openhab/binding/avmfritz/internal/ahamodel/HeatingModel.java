@@ -23,7 +23,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * 
  */
 @XmlRootElement(name = "hkr")
-@XmlType(propOrder = { "tist", "tsoll", "komfort", "absenk", "lock", "batterylow" })
+@XmlType(propOrder = { "tist", "tsoll", "absenk", "komfort", "lock", "errorcode", "batterylow", "nextchange" })
 public class HeatingModel {
 	public static final BigDecimal TEMP_FACTOR = new BigDecimal("0.5");
 	public static final BigDecimal TEMP_MIN = new BigDecimal("8.0");
@@ -35,10 +35,12 @@ public class HeatingModel {
 
 	private BigDecimal tist;
 	private BigDecimal tsoll;
-	private BigDecimal komfort;
 	private BigDecimal absenk;
+	private BigDecimal komfort;
 	private BigDecimal lock;
+	private String errorcode;
 	private BigDecimal batterylow;
+	private String nextchange;
 
 	public BigDecimal getTist() {
 		return tist != null ? tist.multiply(TEMP_FACTOR) : BigDecimal.ZERO;
@@ -80,6 +82,14 @@ public class HeatingModel {
 		this.lock = lock;
 	}
 
+	public String getErrorcode() {
+		return errorcode;
+	}
+
+	public void setErrorcode(String errorcode) {
+		this.errorcode = errorcode;
+	}
+
 	public BigDecimal getBatterylow() {
 		return batterylow;
 	}
@@ -88,9 +98,18 @@ public class HeatingModel {
 		this.batterylow = batterylow;
 	}
 
+	public String getNextchange() {
+		return nextchange;
+	}
+
+	public void setNextchange(String nextchange) {
+		this.nextchange = nextchange;
+	}
+
 	public String toString() {
 		return new ToStringBuilder(this).append("tist", this.getTist()).append("tsoll", this.getTsoll())
-				.append("komfort", this.getKomfort()).append("absenk", this.getAbsenk()).append("lock", this.getLock())
-				.append("batterylow", this.getBatterylow()).toString();
+				.append("absenk", this.getAbsenk()).append("komfort", this.getKomfort()).append("lock", this.getLock())
+				.append("errorcode", this.getErrorcode()).append("batterylow", this.getBatterylow())
+				.append("nextchange", this.getNextchange()).toString();
 	}
 }

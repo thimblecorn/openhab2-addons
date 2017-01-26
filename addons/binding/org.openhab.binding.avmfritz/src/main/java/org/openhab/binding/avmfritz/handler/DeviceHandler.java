@@ -225,7 +225,6 @@ public class DeviceHandler extends BaseThingHandler implements IFritzHandler {
 			Thing thing = this.getThing();
 			if (thing != null) {
 				logger.debug("update thing " + thing.getUID() + " with device model: " + model.toString());
-				logger.debug("about to update " + thing.getUID() + " from " + model.toString());
 				if (model.isTempSensor()) {
 					Channel channel = thing.getChannel(CHANNEL_TEMP);
 					this.updateState(channel.getUID(), new DecimalType(model.getTemperature().getCelsius()));

@@ -38,6 +38,7 @@ public class DeviceModel {
 	public static final int TEMPSENSOR_BIT = 256;
 	public static final int SWITCH_BIT = 512;
 	public static final int DECT_REPEATER_BIT = 1024;
+	
 
 	@XmlAttribute(name = "identifier")
 	private String ident;
