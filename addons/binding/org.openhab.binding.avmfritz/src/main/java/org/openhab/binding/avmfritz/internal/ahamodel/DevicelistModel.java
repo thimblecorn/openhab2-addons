@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlElement;
  * <name>FRITZ!DECT 200 #1</name> <switch> <state>0</state> <mode>manuell</mode>
  * <lock>0</lock> </switch> <powermeter> <power>0</power> <energy>166</energy>
  * </powermeter> <temperature> <celsius>255</celsius> <offset>0</offset>
- * </temperature>
+ * </temperature> </device>
  * <device identifier="##############" id="xx" functionbitmask="320" fwversion=
  * "03.50" manufacturer="AVM" productname="Comet DECT"> <present>1</present>
  * <name>Comet DECT #1</name> <temperature> <celsius>220</celsius>
@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlElement;
  * <absenk>28</absenk> <komfort>42</komfort> <lock>0</lock>
  * <devicelock>0</devicelock> <errorcode>0</errorcode>
  * <batterylow>0</batterylow> <nextchange> <endperiod>1484341200</endperiod>
- * <tchange>28</tchange> </nextchange> </hkr> </device> </device> </devicelist>
+ * <tchange>28</tchange> </nextchange> </hkr> </device> </devicelist>
  * 
  * <pre>
  * 

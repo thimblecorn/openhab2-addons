@@ -23,7 +23,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * 
  */
 @XmlRootElement(name = "hkr")
-@XmlType(propOrder = { "tist", "tsoll", "absenk", "komfort", "lock", "errorcode", "batterylow", "nextchange" })
+@XmlType(propOrder = { "tist", "tsoll", "absenk", "komfort", "lock", "devicelock", "errorcode", "batterylow",
+		"nextchange" })
 public class HeatingModel {
 	public static final BigDecimal TEMP_FACTOR = new BigDecimal("0.5");
 	public static final BigDecimal TEMP_MIN = new BigDecimal("8.0");
@@ -33,14 +34,15 @@ public class HeatingModel {
 	public static final BigDecimal BATTERY_ON = BigDecimal.ONE;
 	public static final BigDecimal BATTERY_OFF = BigDecimal.ZERO;
 
-	private BigDecimal tist;
-	private BigDecimal tsoll;
-	private BigDecimal absenk;
-	private BigDecimal komfort;
-	private BigDecimal lock;
-	private String errorcode;
-	private BigDecimal batterylow;
-	private String nextchange;
+	protected BigDecimal tist;
+	protected BigDecimal tsoll;
+	protected BigDecimal absenk;
+	protected BigDecimal komfort;
+	protected BigDecimal lock;
+	protected BigDecimal devicelock;
+	protected String errorcode;
+	protected BigDecimal batterylow;
+	protected Nextchange nextchange;
 
 	public BigDecimal getTist() {
 		return tist != null ? tist.multiply(TEMP_FACTOR) : BigDecimal.ZERO;
@@ -82,6 +84,14 @@ public class HeatingModel {
 		this.lock = lock;
 	}
 
+	public BigDecimal getDevicelock() {
+		return devicelock;
+	}
+
+	public void setDevicelock(BigDecimal devicelock) {
+		this.devicelock = devicelock;
+	}
+
 	public String getErrorcode() {
 		return errorcode;
 	}
@@ -98,12 +108,12 @@ public class HeatingModel {
 		this.batterylow = batterylow;
 	}
 
-	public String getNextchange() {
+	public Nextchange getNextchange() {
 		return nextchange;
 	}
 
-	public void setNextchange(String nextchange) {
-		this.nextchange = nextchange;
+	public void setNextchange(Nextchange value) {
+		this.nextchange = value;
 	}
 
 	public String toString() {
@@ -111,5 +121,45 @@ public class HeatingModel {
 				.append("absenk", this.getAbsenk()).append("komfort", this.getKomfort()).append("lock", this.getLock())
 				.append("errorcode", this.getErrorcode()).append("batterylow", this.getBatterylow())
 				.append("nextchange", this.getNextchange()).toString();
+	}
+
+	@XmlType(name = "", propOrder = { "endperiod", "tchange" })
+	public static class Nextchange {
+
+		protected int endperiod;
+		protected byte tchange;
+
+		/**
+		 * Ruft den Wert der endperiod-Eigenschaft ab.
+		 * 
+		 */
+		public int getEndperiod() {
+			return endperiod;
+		}
+
+		/**
+		 * Legt den Wert der endperiod-Eigenschaft fest.
+		 * 
+		 */
+		public void setEndperiod(int value) {
+			this.endperiod = value;
+		}
+
+		/**
+		 * Ruft den Wert der tchange-Eigenschaft ab.
+		 * 
+		 */
+		public byte getTchange() {
+			return tchange;
+		}
+
+		/**
+		 * Legt den Wert der tchange-Eigenschaft fest.
+		 * 
+		 */
+		public void setTchange(byte value) {
+			this.tchange = value;
+		}
+
 	}
 }

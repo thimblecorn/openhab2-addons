@@ -120,15 +120,15 @@ public class BoxHandler extends BaseBridgeHandler implements IFritzHandler {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addDeviceList(DeviceModel model) {
+	public void addDeviceList(DeviceModel device) {
 		try {
-			logger.debug("set device model: " + model.toString());
-			this.deviceList.put(model.getIdentifier(), model);
-			ThingUID thingUID = this.getThingUID(model);
+			logger.debug("set device model: {}", device.toString());
+			this.deviceList.put(device.getIdentifier(), device);
+			ThingUID thingUID = this.getThingUID(device);
 			Thing thing = this.getThingByUID(thingUID);
 			if (thing != null) {
-				logger.debug("update thing " + thingUID + " with device model: " + model.toString());
-				this.updateThingFromDevice(thing, model);
+				logger.debug("update thing {} with device model: {}", thingUID, device.toString());
+				this.updateThingFromDevice(thing, device);
 			}
 		} catch (Exception e) {
 			logger.error(e.getLocalizedMessage(), e);
@@ -178,18 +178,18 @@ public class BoxHandler extends BaseBridgeHandler implements IFritzHandler {
 					logger.warn("unknown state " + device.getSwitch().getState() + " for channel " + channel.getUID());
 				}
 			}
-			if (device.isHeatingThermostat() && device.getHeating() != null) {
+			if (device.isHeatingThermostat() && device.getHkr() != null) {
 				Channel channelActualTemp = thing.getChannel(INPUT_ACTUALTEMP);
-				this.updateState(CHANNEL_ACTUALTEMP, new DecimalType(device.getHeating().getTist()));
+				this.updateState(CHANNEL_ACTUALTEMP, new DecimalType(device.getHkr().getTist()));
 				Channel channelSetTemp = thing.getChannel(INPUT_SETTEMP);
-				this.updateState(CHANNEL_SETTEMP, new DecimalType(device.getHeating().getTsoll()));
+				this.updateState(CHANNEL_SETTEMP, new DecimalType(device.getHkr().getTsoll()));
 				Channel channelBattery = thing.getChannel(INPUT_BATTERY);
-				if (device.getHeating().getBatterylow().equals(HeatingModel.BATTERY_ON)) {
+				if (device.getHkr().getBatterylow().equals(HeatingModel.BATTERY_ON)) {
 					this.updateState(CHANNEL_BATTERY, OnOffType.ON);
-				} else if (device.getHeating().getBatterylow().equals(HeatingModel.BATTERY_OFF)) {
+				} else if (device.getHkr().getBatterylow().equals(HeatingModel.BATTERY_OFF)) {
 					this.updateState(CHANNEL_BATTERY, OnOffType.OFF);
 				} else {
-					logger.warn("unknown state " + device.getHeating().getBatterylow() + " for channel "
+					logger.warn("unknown state " + device.getHkr().getBatterylow() + " for channel "
 							+ channelBattery.getUID());
 				}
 			}

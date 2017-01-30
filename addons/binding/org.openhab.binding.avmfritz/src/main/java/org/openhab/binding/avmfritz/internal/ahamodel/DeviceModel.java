@@ -38,7 +38,6 @@ public class DeviceModel {
 	public static final int TEMPSENSOR_BIT = 256;
 	public static final int SWITCH_BIT = 512;
 	public static final int DECT_REPEATER_BIT = 1024;
-	
 
 	@XmlAttribute(name = "identifier")
 	private String ident;
@@ -88,11 +87,11 @@ public class DeviceModel {
 		this.temperatureModel = temperature;
 	}
 
-	public HeatingModel getHeating() {
+	public HeatingModel getHkr() {
 		return heatingModel;
 	}
 
-	public void setHeating(HeatingModel heating) {
+	public void setHkr(HeatingModel heating) {
 		this.heatingModel = heating;
 	}
 
@@ -156,6 +155,6 @@ public class DeviceModel {
 				.append("manufacturer", this.deviceManufacturer).append("productname", this.getProductName())
 				.append("fwversion", this.getFirmwareVersion()).append("present", this.present)
 				.append("name", this.name).append(this.getSwitch()).append(this.getPowermeter())
-				.append(this.getTemperature()).append(this.getHeating()).toString();
+				.append(this.getTemperature()).append(this.getHkr()).toString();
 	}
 }
