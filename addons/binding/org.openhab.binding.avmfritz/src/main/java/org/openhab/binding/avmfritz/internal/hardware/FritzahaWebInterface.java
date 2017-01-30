@@ -349,6 +349,14 @@ public class FritzahaWebInterface {
 		return this.asyncGet(callback);
 	}
 
+	public FritzahaContentExchange getEcoTemp(String ain) {
+		return null;
+	}
+
+	public FritzahaContentExchange getComfortTemp(String ain) {
+		return null;
+	}
+
 	public FritzahaContentExchange getBattery(String ain) {
 		return null;
 	}

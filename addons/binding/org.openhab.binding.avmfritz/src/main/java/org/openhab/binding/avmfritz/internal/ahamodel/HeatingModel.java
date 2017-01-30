@@ -161,5 +161,10 @@ public class HeatingModel {
 			this.tchange = value;
 		}
 
+		public String toString() {
+			return new ToStringBuilder(this).append("endperiod", this.getEndperiod())
+					.append("tchange", this.getTchange()).toString();
+		}
+
 	}
 }

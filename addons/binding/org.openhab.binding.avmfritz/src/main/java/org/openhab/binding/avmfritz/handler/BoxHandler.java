@@ -10,6 +10,7 @@ package org.openhab.binding.avmfritz.handler;
 
 import static org.openhab.binding.avmfritz.BindingConstants.*;
 
+import java.math.BigDecimal;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ScheduledFuture;
@@ -157,10 +158,10 @@ public class BoxHandler extends BaseBridgeHandler implements IFritzHandler {
 		}
 		if (device.getPresent() == 1) {
 			thing.setStatusInfo(new ThingStatusInfo(ThingStatus.ONLINE, ThingStatusDetail.NONE, null));
-			logger.debug("about to update " + thing.getUID() + " from " + device.toString());
+			logger.debug("about to update thing {} from device {}", thing.getUID(), device.toString());
 			if (device.isTempSensor() && device.getTemperature() != null) {
-				Channel channel = thing.getChannel(CHANNEL_TEMP);
-				this.updateState(channel.getUID(), new DecimalType(device.getTemperature().getCelsius()));
+				Channel channelTemp = thing.getChannel(CHANNEL_TEMP);
+				this.updateState(channelTemp.getUID(), new DecimalType(device.getTemperature().getCelsius()));
 			}
 			if (device.isPowermeter() && device.getPowermeter() != null) {
 				Channel channelEnergy = thing.getChannel(CHANNEL_ENERGY);
@@ -169,28 +170,33 @@ public class BoxHandler extends BaseBridgeHandler implements IFritzHandler {
 				this.updateState(channelPower.getUID(), new DecimalType(device.getPowermeter().getPower()));
 			}
 			if (device.isSwitchableOutlet() && device.getSwitch() != null) {
-				Channel channel = thing.getChannel(CHANNEL_SWITCH);
+				Channel channelSwitch = thing.getChannel(CHANNEL_SWITCH);
 				if (device.getSwitch().getState().equals(SwitchModel.ON)) {
-					this.updateState(channel.getUID(), OnOffType.ON);
+					this.updateState(channelSwitch.getUID(), OnOffType.ON);
 				} else if (device.getSwitch().getState().equals(SwitchModel.OFF)) {
-					this.updateState(channel.getUID(), OnOffType.OFF);
+					this.updateState(channelSwitch.getUID(), OnOffType.OFF);
 				} else {
-					logger.warn("unknown state " + device.getSwitch().getState() + " for channel " + channel.getUID());
+					logger.warn("Received unknown value {} for channel {}", device.getSwitch().getState(),
+							channelSwitch.getUID());
 				}
 			}
 			if (device.isHeatingThermostat() && device.getHkr() != null) {
-				Channel channelActualTemp = thing.getChannel(INPUT_ACTUALTEMP);
-				this.updateState(CHANNEL_ACTUALTEMP, new DecimalType(device.getHkr().getTist()));
-				Channel channelSetTemp = thing.getChannel(INPUT_SETTEMP);
-				this.updateState(CHANNEL_SETTEMP, new DecimalType(device.getHkr().getTsoll()));
-				Channel channelBattery = thing.getChannel(INPUT_BATTERY);
+				Channel channelActualTemp = thing.getChannel(CHANNEL_ACTUALTEMP);
+				this.updateState(channelActualTemp.getUID(), new DecimalType(device.getHkr().getTist()));
+				Channel channelSetTemp = thing.getChannel(CHANNEL_SETTEMP);
+				this.updateState(channelSetTemp.getUID(), new DecimalType(device.getHkr().getTsoll()));
+				Channel channelEcoTemp = thing.getChannel(CHANNEL_ECOTEMP);
+				this.updateState(channelEcoTemp.getUID(), new DecimalType(device.getHkr().getAbsenk()));
+				Channel channelComfortTemp = thing.getChannel(CHANNEL_COMFORTTEMP);
+				this.updateState(channelComfortTemp.getUID(), new DecimalType(device.getHkr().getKomfort()));
+				Channel channelBattery = thing.getChannel(CHANNEL_BATTERY);
 				if (device.getHkr().getBatterylow().equals(HeatingModel.BATTERY_ON)) {
-					this.updateState(CHANNEL_BATTERY, OnOffType.ON);
+					this.updateState(channelBattery.getUID(), OnOffType.ON);
 				} else if (device.getHkr().getBatterylow().equals(HeatingModel.BATTERY_OFF)) {
-					this.updateState(CHANNEL_BATTERY, OnOffType.OFF);
+					this.updateState(channelBattery.getUID(), OnOffType.OFF);
 				} else {
-					logger.warn("unknown state " + device.getHkr().getBatterylow() + " for channel "
-							+ channelBattery.getUID());
+					logger.warn("Received unknown value {} for channel {}", device.getHkr().getBatterylow(),
+							channelBattery.getUID());
 				}
 			}
 		} else {
