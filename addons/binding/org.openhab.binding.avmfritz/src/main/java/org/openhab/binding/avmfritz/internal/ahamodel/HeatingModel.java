@@ -31,8 +31,8 @@ public class HeatingModel {
 	public static final BigDecimal TEMP_MAX = new BigDecimal("28.0");
 	public static final BigDecimal TEMP_OFF = new BigDecimal("253.0");
 	public static final BigDecimal TEMP_ON = new BigDecimal("254.0");
-	public static final BigDecimal BATTERY_ON = BigDecimal.ONE;
 	public static final BigDecimal BATTERY_OFF = BigDecimal.ZERO;
+	public static final BigDecimal BATTERY_ON = BigDecimal.ONE;
 
 	protected BigDecimal tist;
 	protected BigDecimal tsoll;
@@ -45,7 +45,15 @@ public class HeatingModel {
 	protected Nextchange nextchange;
 
 	public BigDecimal getTist() {
-		return tist != null ? tist.multiply(TEMP_FACTOR) : BigDecimal.ZERO;
+		if (tist == null) {
+			return BigDecimal.ZERO;
+		} else if (tist.compareTo(TEMP_ON) == 0) {
+			return TEMP_MAX.add(new BigDecimal("2.0"));
+		} else if (tist.compareTo(TEMP_OFF) == 0) {
+			return TEMP_MIN.subtract(new BigDecimal("2.0"));
+		} else {
+			return tist.multiply(TEMP_FACTOR);
+		}
 	}
 
 	public void setTist(BigDecimal tist) {
