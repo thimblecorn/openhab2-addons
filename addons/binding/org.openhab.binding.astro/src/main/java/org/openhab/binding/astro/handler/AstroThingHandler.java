@@ -154,7 +154,7 @@ public abstract class AstroThingHandler extends BaseThingHandler {
     /**
      * Publishes the channel with data if it's linked.
      */
-    private void publishChannelIfLinked(ChannelUID channelUID) {
+    public void publishChannelIfLinked(ChannelUID channelUID) {
         if (isLinked(channelUID.getId()) && getPlanet() != null) {
             try {
                 updateState(channelUID, PropertyUtils.getState(channelUID, getPlanet()));
@@ -301,7 +301,11 @@ public abstract class AstroThingHandler extends BaseThingHandler {
      * Emits an event for the given channel.
      */
     public void triggerEvent(String channelId, String event) {
-        triggerChannel(getThing().getChannel(channelId).getUID(), event);
+        if (getThing().getChannel(channelId) != null) {
+            triggerChannel(getThing().getChannel(channelId).getUID(), event);
+        } else {
+            logger.warn("Event {} in thing {} does not exist, please recreate the thing", event, getThing().getUID());
+        }
     }
 
     /**
