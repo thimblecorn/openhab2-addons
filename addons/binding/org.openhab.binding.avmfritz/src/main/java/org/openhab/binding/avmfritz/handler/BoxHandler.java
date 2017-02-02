@@ -43,6 +43,7 @@ import org.slf4j.LoggerFactory;
  * Handler for a FRITZ!Box device. Handles polling of values from AHA devices.
  *
  * @author Robert Bausdorf
+ * @author Christoph Weitkamp
  *
  */
 public class BoxHandler extends BaseBridgeHandler implements IFritzHandler {

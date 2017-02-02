@@ -45,15 +45,7 @@ public class HeatingModel {
 	protected Nextchange nextchange;
 
 	public BigDecimal getTist() {
-		if (tist == null) {
-			return BigDecimal.ZERO;
-		} else if (tist.compareTo(TEMP_ON) == 0) {
-			return TEMP_MAX.add(new BigDecimal("2.0"));
-		} else if (tist.compareTo(TEMP_OFF) == 0) {
-			return TEMP_MIN.subtract(new BigDecimal("2.0"));
-		} else {
-			return tist.multiply(TEMP_FACTOR);
-		}
+		return tist != null ? tist.multiply(TEMP_FACTOR) : BigDecimal.ZERO;
 	}
 
 	public void setTist(BigDecimal tist) {
@@ -61,7 +53,15 @@ public class HeatingModel {
 	}
 
 	public BigDecimal getTsoll() {
-		return tsoll != null ? tsoll.multiply(TEMP_FACTOR) : BigDecimal.ZERO;
+		if (tsoll == null) {
+			return BigDecimal.ZERO;
+		} else if (tsoll.compareTo(TEMP_ON) == 0) {
+			return TEMP_MAX.add(new BigDecimal("2.0"));
+		} else if (tsoll.compareTo(TEMP_OFF) == 0) {
+			return TEMP_MIN.subtract(new BigDecimal("2.0"));
+		} else {
+			return tsoll.multiply(TEMP_FACTOR);
+		}
 	}
 
 	public void setTsoll(BigDecimal tsoll) {

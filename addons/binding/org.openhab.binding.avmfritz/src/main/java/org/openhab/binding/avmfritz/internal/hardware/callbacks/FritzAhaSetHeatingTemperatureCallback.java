@@ -15,9 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Callback implementation for updating switch states Supports reauthorization
+ * Callback implementation for updating heating values Supports reauthorization
  * 
- * @author Robert Bausdorf
+ * @author Christoph Weitkamp
  * 
  */
 public class FritzAhaSetHeatingTemperatureCallback extends FritzAhaReauthCallback {

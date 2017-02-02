@@ -18,6 +18,7 @@ import com.google.common.collect.ImmutableSet;
  * This class defines common constants, which are used across the whole binding.
  *
  * @author Robert Bausdorf
+ * @author Christoph Weitkamp
  *
  */
 public class BindingConstants {

@@ -45,6 +45,7 @@ import org.slf4j.LoggerFactory;
  * sent to one of the channels.
  *
  * @author Robert Bausdorf - Initial contribution
+ * @author Christoph Weitkamp
  *
  */
 public class DeviceHandler extends BaseThingHandler implements IFritzHandler {
