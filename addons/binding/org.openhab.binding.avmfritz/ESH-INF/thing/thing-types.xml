@@ -205,7 +205,7 @@
 		<label>Energy Consumption</label>
 		<description>Accumulated energy consumption</description>
 		<category>Energy</category>
-		<state pattern="%.2f kWh" readOnly="true"/>
+		<state pattern="%.3f kWh" readOnly="true"/>
 	</channel-type>
 
 	<channel-type id="power">
@@ -273,7 +273,7 @@
         <label>Battery Level Low</label>
         <description>Battery charge Level</description>
         <category>Battery</category>
-        <state readOnly="true"></state>
+        <state readOnly="true"/>
     </channel-type>
 
 </thing:thing-descriptions>
