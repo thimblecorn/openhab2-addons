@@ -335,10 +335,6 @@ public class FritzahaWebInterface {
 		return this.asyncGet(callback);
 	}
 
-	public FritzahaContentExchange getActualTemp(String ain) {
-		return null;
-	}
-
 	public FritzahaContentExchange getSetTemp(String ain) {
 		return null;
 	}

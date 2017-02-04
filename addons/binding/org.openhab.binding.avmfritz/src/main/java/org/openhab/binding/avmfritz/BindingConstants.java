@@ -62,6 +62,8 @@ public class BindingConstants {
 	public final static String CHANNEL_SETTEMP = "set_temp";
 	public final static String CHANNEL_ECOTEMP = "eco_temp";
 	public final static String CHANNEL_COMFORTTEMP = "comfort_temp";
+	public final static String CHANNEL_NEXTCHANGE = "next_change";
+	public final static String CHANNEL_NEXTTEMP = "next_temp";
 	public final static String CHANNEL_BATTERY = "battery_low";
 
 	// List of all Input tags
@@ -69,6 +71,8 @@ public class BindingConstants {
 	public final static String INPUT_SETTEMP = "tsoll";
 	public final static String INPUT_ECOTEMP = "absenk";
 	public final static String INPUT_COMFORTTEMP = "komfort";
+	public final static String INPUT_NEXTCHANGE = "endperiod";
+	public final static String INPUT_NEXTTEMP = "tchange";
 	public final static String INPUT_BATTERY = "batterylow";
 
 	public final static Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = ImmutableSet.of(DECT100_THING_TYPE,

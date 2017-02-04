@@ -11,10 +11,13 @@ package org.openhab.binding.avmfritz.handler;
 import static org.openhab.binding.avmfritz.BindingConstants.*;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.Date;
 
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import org.eclipse.smarthome.core.library.types.DateTimeType;
 import org.eclipse.smarthome.core.library.types.DecimalType;
 import org.eclipse.smarthome.core.library.types.OnOffType;
 import org.eclipse.smarthome.core.thing.Bridge;
@@ -177,7 +180,7 @@ public class DeviceHandler extends BaseThingHandler implements IFritzHandler {
 			break;
 		case CHANNEL_ACTUALTEMP:
 			if (command instanceof RefreshType) {
-				fritzBox.getActualTemp(ain);
+				// not supported
 			}
 			break;
 		case CHANNEL_SETTEMP:
@@ -204,6 +207,16 @@ public class DeviceHandler extends BaseThingHandler implements IFritzHandler {
 		case CHANNEL_COMFORTTEMP:
 			if (command instanceof RefreshType) {
 				fritzBox.getComfortTemp(ain);
+			}
+			break;
+		case CHANNEL_NEXTCHANGE:
+			if (command instanceof RefreshType) {
+				// not supported
+			}
+			break;
+		case CHANNEL_NEXTTEMP:
+			if (command instanceof RefreshType) {
+				// not supported
 			}
 			break;
 		case CHANNEL_BATTERY:
@@ -259,6 +272,10 @@ public class DeviceHandler extends BaseThingHandler implements IFritzHandler {
 					this.updateSetTempChannel(device.getHkr().getTsoll());
 					this.updateEcoTempChannel(device.getHkr().getAbsenk());
 					this.updateComfortTempChannel(device.getHkr().getKomfort());
+					if (device.getHkr().getNextchange() != null) {
+						this.updateNextChangeChannel(device.getHkr().getNextchange().getEndperiod());
+						this.updateNextTempChannel(device.getHkr().getNextchange().getTchange());
+					}
 					if (device.getHkr().getBatterylow().equals(HeatingModel.BATTERY_ON)) {
 						this.updateBatteryChannel(OnOffType.ON);
 					} else if (device.getHkr().getBatterylow().equals(HeatingModel.BATTERY_OFF)) {
@@ -336,6 +353,16 @@ public class DeviceHandler extends BaseThingHandler implements IFritzHandler {
 
 	public void updateComfortTempChannel(BigDecimal temperature) {
 		this.updateState(CHANNEL_COMFORTTEMP, new DecimalType(temperature));
+	}
+
+	public void updateNextChangeChannel(int timestamp) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date(timestamp * 1000L));
+		this.updateState(CHANNEL_NEXTCHANGE, new DateTimeType(calendar));
+	}
+
+	public void updateNextTempChannel(BigDecimal temperature) {
+		this.updateState(CHANNEL_NEXTTEMP, new DecimalType(temperature));
 	}
 
 	public void updateBatteryChannel(OnOffType state) {

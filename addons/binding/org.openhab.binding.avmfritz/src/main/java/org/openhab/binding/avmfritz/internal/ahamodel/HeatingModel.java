@@ -135,7 +135,7 @@ public class HeatingModel {
 	public static class Nextchange {
 
 		protected int endperiod;
-		protected byte tchange;
+		protected BigDecimal tchange;
 
 		/**
 		 * Ruft den Wert der endperiod-Eigenschaft ab.
@@ -157,15 +157,15 @@ public class HeatingModel {
 		 * Ruft den Wert der tchange-Eigenschaft ab.
 		 * 
 		 */
-		public byte getTchange() {
-			return tchange;
+		public BigDecimal getTchange() {
+			return tchange != null ? tchange.multiply(TEMP_FACTOR) : BigDecimal.ZERO;
 		}
 
 		/**
 		 * Legt den Wert der tchange-Eigenschaft fest.
 		 * 
 		 */
-		public void setTchange(byte value) {
+		public void setTchange(BigDecimal value) {
 			this.tchange = value;
 		}
 

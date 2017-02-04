@@ -11,11 +11,14 @@ package org.openhab.binding.avmfritz.handler;
 import static org.openhab.binding.avmfritz.BindingConstants.*;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import org.eclipse.smarthome.core.library.types.DateTimeType;
 import org.eclipse.smarthome.core.library.types.DecimalType;
 import org.eclipse.smarthome.core.library.types.OnOffType;
 import org.eclipse.smarthome.core.thing.Bridge;
@@ -190,6 +193,15 @@ public class BoxHandler extends BaseBridgeHandler implements IFritzHandler {
 				this.updateState(channelEcoTemp.getUID(), new DecimalType(device.getHkr().getAbsenk()));
 				Channel channelComfortTemp = thing.getChannel(CHANNEL_COMFORTTEMP);
 				this.updateState(channelComfortTemp.getUID(), new DecimalType(device.getHkr().getKomfort()));
+				if (device.getHkr().getNextchange() != null) {
+					Channel channelNextChange = thing.getChannel(CHANNEL_NEXTCHANGE);
+					Calendar calendar = Calendar.getInstance();
+					calendar.setTime(new Date(device.getHkr().getNextchange().getEndperiod() * 1000L));
+					this.updateState(channelNextChange.getUID(), new DateTimeType(calendar));
+					Channel channelNextTemp = thing.getChannel(CHANNEL_NEXTTEMP);
+					this.updateState(channelNextTemp.getUID(),
+							new DecimalType(device.getHkr().getNextchange().getTchange()));
+				}
 				Channel channelBattery = thing.getChannel(CHANNEL_BATTERY);
 				if (device.getHkr().getBatterylow().equals(HeatingModel.BATTERY_ON)) {
 					this.updateState(channelBattery.getUID(), OnOffType.ON);
