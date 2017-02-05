@@ -32,6 +32,7 @@ import org.eclipse.smarthome.core.thing.ThingUID;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandler;
 import org.eclipse.smarthome.core.types.Command;
 import org.eclipse.smarthome.core.types.RefreshType;
+import org.eclipse.smarthome.core.types.UnDefType;
 import org.openhab.binding.avmfritz.BindingConstants;
 import org.openhab.binding.avmfritz.config.AvmFritzConfiguration;
 import org.openhab.binding.avmfritz.internal.ahamodel.DeviceModel;
@@ -221,7 +222,7 @@ public class DeviceHandler extends BaseThingHandler implements IFritzHandler {
 			break;
 		case CHANNEL_BATTERY:
 			if (command instanceof RefreshType) {
-				fritzBox.getBattery(ain);
+				// not supported
 			}
 			break;
 		default:
@@ -258,7 +259,9 @@ public class DeviceHandler extends BaseThingHandler implements IFritzHandler {
 					this.updatePowerChannel(device.getPowermeter().getPower());
 				}
 				if (device.isSwitchableOutlet() && device.getSwitch() != null) {
-					if (device.getSwitch().getState().equals(SwitchModel.ON)) {
+					if (device.getSwitch().getState() == null) {
+						this.updateState(CHANNEL_SWITCH, UnDefType.UNDEF);
+					} else if (device.getSwitch().getState().equals(SwitchModel.ON)) {
 						this.updateSwitchChannel(OnOffType.ON);
 					} else if (device.getSwitch().getState().equals(SwitchModel.OFF)) {
 						this.updateSwitchChannel(OnOffType.OFF);
@@ -276,7 +279,9 @@ public class DeviceHandler extends BaseThingHandler implements IFritzHandler {
 						this.updateNextChangeChannel(device.getHkr().getNextchange().getEndperiod());
 						this.updateNextTempChannel(device.getHkr().getNextchange().getTchange());
 					}
-					if (device.getHkr().getBatterylow().equals(HeatingModel.BATTERY_ON)) {
+					if (device.getHkr().getBatterylow() == null) {
+						this.updateState(CHANNEL_BATTERY, UnDefType.UNDEF);
+					} else if (device.getHkr().getBatterylow().equals(HeatingModel.BATTERY_ON)) {
 						this.updateBatteryChannel(OnOffType.ON);
 					} else if (device.getHkr().getBatterylow().equals(HeatingModel.BATTERY_OFF)) {
 						this.updateBatteryChannel(OnOffType.OFF);

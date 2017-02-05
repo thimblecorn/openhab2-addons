@@ -353,8 +353,4 @@ public class FritzahaWebInterface {
 		return null;
 	}
 
-	public FritzahaContentExchange getBattery(String ain) {
-		return null;
-	}
-
 }

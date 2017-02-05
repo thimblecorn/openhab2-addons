@@ -33,6 +33,7 @@ import org.eclipse.smarthome.core.thing.ThingUID;
 import org.eclipse.smarthome.core.thing.binding.BaseBridgeHandler;
 import org.eclipse.smarthome.core.types.Command;
 import org.eclipse.smarthome.core.types.RefreshType;
+import org.eclipse.smarthome.core.types.UnDefType;
 import org.openhab.binding.avmfritz.BindingConstants;
 import org.openhab.binding.avmfritz.config.AvmFritzConfiguration;
 import org.openhab.binding.avmfritz.internal.ahamodel.DeviceModel;
@@ -175,7 +176,9 @@ public class BoxHandler extends BaseBridgeHandler implements IFritzHandler {
 			}
 			if (device.isSwitchableOutlet() && device.getSwitch() != null) {
 				Channel channelSwitch = thing.getChannel(CHANNEL_SWITCH);
-				if (device.getSwitch().getState().equals(SwitchModel.ON)) {
+				if (device.getSwitch().getState() == null) {
+					this.updateState(channelSwitch.getUID(), UnDefType.UNDEF);
+				} else if (device.getSwitch().getState().equals(SwitchModel.ON)) {
 					this.updateState(channelSwitch.getUID(), OnOffType.ON);
 				} else if (device.getSwitch().getState().equals(SwitchModel.OFF)) {
 					this.updateState(channelSwitch.getUID(), OnOffType.OFF);
@@ -203,7 +206,9 @@ public class BoxHandler extends BaseBridgeHandler implements IFritzHandler {
 							new DecimalType(device.getHkr().getNextchange().getTchange()));
 				}
 				Channel channelBattery = thing.getChannel(CHANNEL_BATTERY);
-				if (device.getHkr().getBatterylow().equals(HeatingModel.BATTERY_ON)) {
+				if (device.getHkr().getBatterylow() == null) {
+					this.updateState(channelBattery.getUID(), UnDefType.UNDEF);
+				} else if (device.getHkr().getBatterylow().equals(HeatingModel.BATTERY_ON)) {
 					this.updateState(channelBattery.getUID(), OnOffType.ON);
 				} else if (device.getHkr().getBatterylow().equals(HeatingModel.BATTERY_OFF)) {
 					this.updateState(channelBattery.getUID(), OnOffType.OFF);
