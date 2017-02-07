@@ -41,6 +41,8 @@
             <channel id="set_temp" typeId="set_temp" />
             <channel id="eco_temp" typeId="eco_temp" />
             <channel id="comfort_temp" typeId="comfort_temp" />
+            <channel id="next_change" typeId="next_change" />
+            <channel id="next_temp" typeId="next_temp" />
             <channel id="battery_low" typeId="battery_low" />
         </channels>
         <config-description>
@@ -226,7 +228,7 @@
 		<state readOnly="false"/>
     </channel-type>
 
-    <channel-type id="actual_temp">
+    <channel-type id="actual_temp" advanced="true">
         <item-type>Number</item-type>
         <label>Actual Temperature of heating thermostat</label>
         <description>Actual measured temperature</description>
@@ -270,7 +272,7 @@
         <state pattern="%.1f °C" readOnly="true"/>
     </channel-type>
 
-    <channel-type id="next_change">
+    <channel-type id="next_change" advanced="true">
         <item-type>DateTime</item-type>
         <label>Next change of Set Temperature</label>
         <description>Next change of Set Temperature</description>
@@ -281,7 +283,7 @@
         <state readOnly="true"/>
     </channel-type>
 
-    <channel-type id="next_temp">
+    <channel-type id="next_temp" advanced="true">
         <item-type>Number</item-type>
         <label>Next Set Temperature</label>
         <description>Next Set Temperature</description>
@@ -292,7 +294,7 @@
         <state pattern="%.1f °C" readOnly="true"/>
     </channel-type>
 
-    <channel-type id="battery_low">
+    <channel-type id="battery_low" advanced="true">
         <item-type>Switch</item-type>
         <label>Battery Level Low</label>
         <description>Battery charge Level</description>
