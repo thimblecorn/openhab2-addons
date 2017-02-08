@@ -276,7 +276,6 @@
         <item-type>DateTime</item-type>
         <label>Next change of Set Temperature</label>
         <description>Next change of Set Temperature</description>
-        <category>Temperature</category>
         <tags>
             <tag>heating</tag>
         </tags>
