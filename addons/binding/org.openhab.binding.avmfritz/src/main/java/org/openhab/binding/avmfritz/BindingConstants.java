@@ -54,6 +54,7 @@ public class BindingConstants {
 	public final static ThingTypeUID COMETDECT_THING_TYPE = new ThingTypeUID(BINDING_ID, DEVICE_COMETDECT);
 
 	// List of all Channel ids
+	public final static String CHANNEL_ONLINE = "online";
 	public final static String CHANNEL_TEMP = "temperature";
 	public final static String CHANNEL_ENERGY = "energy";
 	public final static String CHANNEL_POWER = "power";
@@ -67,6 +68,7 @@ public class BindingConstants {
 	public final static String CHANNEL_BATTERY = "battery_low";
 
 	// List of all Input tags
+	public final static String INPUT_PRESENT = "present";
 	public final static String INPUT_ACTUALTEMP = "tist";
 	public final static String INPUT_SETTEMP = "tsoll";
 	public final static String INPUT_ECOTEMP = "absenk";

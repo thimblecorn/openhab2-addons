@@ -171,6 +171,8 @@ public class BoxHandler extends BaseBridgeHandler implements IFritzHandler {
 		if (thing == null || device == null) {
 			throw new IllegalArgumentException("thing or device null, cannot perform update");
 		}
+		Channel channelOnline = thing.getChannel(CHANNEL_ONLINE);
+		this.updateState(channelOnline.getUID(), (device.getPresent() == 1) ? OnOffType.ON : OnOffType.OFF);
 		if (device.getPresent() == 1) {
 			thing.setStatusInfo(new ThingStatusInfo(ThingStatus.ONLINE, ThingStatusDetail.NONE, null));
 			logger.debug("about to update thing {} from device {}", thing.getUID(), device.toString());
