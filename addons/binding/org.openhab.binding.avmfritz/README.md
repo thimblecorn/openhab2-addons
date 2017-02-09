@@ -7,7 +7,7 @@ The binding integrates the AHA ( [AVM Home Automation](http://avm.de/ratgeber/sm
 
 ### FRITZ!Box
 
-The well known FRITZ!Boxes are supported as bridge for accessing other AHA devices. It is planned to support some channels directly at the bridge like call monitoring and others - but these things are under current development by now. The Box has to run at least on firmware FRITZ!OS 6.00 and hast to support the "Smart Home" service.
+The well known FRITZ!Boxes are supported as bridge for accessing other AHA devices. It is planned to support some channels directly at the bridge like call monitoring and others - but these things are under current development by now. The Box has to run at least on firmware FRITZ!OS 6.00 and has to support the "Smart Home" service.
 
 ### FRITZ!DECT 200 / FRITZ!DECT 210
 
@@ -23,7 +23,7 @@ This [powerline adapter](http://avm.de/produkte/fritzpowerline/fritzpowerline-54
 
 ### FRITZ!DECT 300 / Comet DECT
 
-These two devices [FRITZ!DECT 300](https://avm.de/produkte/fritzdect/fritzdect-300/) and [Comet DECT](https://www.eurotronic.org/produkte/comet-dect.html) ( [EUROtronic Technology GmbH](https://www.eurotronic.org) ) are used to regulate radiators via DECT protocol. The FRITZ!Box can handle up to twelve heating thermostats. The binding provides channels for reading and setting the temperature. Additionally you can check the eco temperature, the  comfort temperature and the battery level of the device. The FRITZ!Box has to run at least on firmware FRITZ!OS 6.35.
+These two devices [FRITZ!DECT 300](https://avm.de/produkte/fritzdect/fritzdect-300/) and [Comet DECT](https://www.eurotronic.org/produkte/comet-dect.html) ( [EUROtronic Technology GmbH](https://www.eurotronic.org) ) are used to regulate radiators via DECT protocol. The FRITZ!Box can handle up to twelve heating thermostats. The binding provides channels for reading and setting the temperature. Additionally you can check the eco temperature, the comfort temperature and the battery level of the device. The FRITZ!Box has to run at least on firmware FRITZ!OS 6.35.
 
 ## Discovery
 

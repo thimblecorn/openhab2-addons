@@ -23,7 +23,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  *
  */
 @XmlRootElement(name = "switch")
-@XmlType(propOrder = { "state", "mode", "lock"})
+@XmlType(propOrder = { "state", "mode", "lock" })
 public class SwitchModel {
 	public static final BigDecimal ON = BigDecimal.ONE;
 	public static final BigDecimal OFF = BigDecimal.ZERO;
@@ -35,33 +35,30 @@ public class SwitchModel {
 	public BigDecimal getState() {
 		return state;
 	}
-	
+
 	public void setState(BigDecimal state) {
 		this.state = state;
 	}
-	
+
 	public String getMode() {
 		return mode;
 	}
-	
+
 	public void setMode(String mode) {
 		this.mode = mode;
 	}
-	
+
 	public BigDecimal getLock() {
 		return lock;
 	}
-	
+
 	public void setLock(BigDecimal lock) {
 		this.lock = lock;
 	}
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this)
-			.append("state", this.getState())
-			.append("mode", this.getMode())
-			.append("lock", this.getLock())
-			.toString();
+		return new ToStringBuilder(this).append("state", this.getState()).append("mode", this.getMode())
+				.append("lock", this.getLock()).toString();
 	}
 }

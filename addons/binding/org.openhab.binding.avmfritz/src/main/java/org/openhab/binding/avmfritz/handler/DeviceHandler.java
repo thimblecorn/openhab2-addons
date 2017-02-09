@@ -8,12 +8,25 @@
  */
 package org.openhab.binding.avmfritz.handler;
 
-import static org.openhab.binding.avmfritz.BindingConstants.*;
+import static org.openhab.binding.avmfritz.BindingConstants.BINDING_ID;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_ACTUALTEMP;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_BATTERY;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_COMFORTTEMP;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_ECOTEMP;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_ENERGY;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_NEXTCHANGE;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_NEXTTEMP;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_POWER;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_SETTEMP;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_SWITCH;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_TEMP;
+import static org.openhab.binding.avmfritz.BindingConstants.INPUT_BATTERY;
+import static org.openhab.binding.avmfritz.BindingConstants.PL546E_STANDALONE_THING_TYPE;
+import static org.openhab.binding.avmfritz.BindingConstants.THING_AIN;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
-
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -39,8 +52,6 @@ import org.openhab.binding.avmfritz.internal.ahamodel.DeviceModel;
 import org.openhab.binding.avmfritz.internal.ahamodel.HeatingModel;
 import org.openhab.binding.avmfritz.internal.ahamodel.SwitchModel;
 import org.openhab.binding.avmfritz.internal.hardware.FritzahaWebInterface;
-import org.openhab.binding.avmfritz.internal.hardware.callbacks.FritzAhaSetSwitchCallback;
-import org.openhab.binding.avmfritz.internal.hardware.callbacks.FritzAhaSetHeatingTemperatureCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

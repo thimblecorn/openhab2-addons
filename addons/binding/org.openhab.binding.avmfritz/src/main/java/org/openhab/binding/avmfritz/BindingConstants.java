@@ -84,5 +84,4 @@ public class BindingConstants {
 
 	public final static Set<ThingTypeUID> SUPPORTED_BRIDGE_THING_TYPES_UIDS = ImmutableSet.of(BRIDGE_THING_TYPE,
 			PL546E_STANDALONE_THING_TYPE);
-
 }

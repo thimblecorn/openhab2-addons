@@ -23,7 +23,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  *
  */
 @XmlRootElement(name = "powermeter")
-@XmlType(propOrder = { "power", "energy"})
+@XmlType(propOrder = { "power", "energy" })
 public class PowerMeterModel {
 	public static final BigDecimal POWER_FACTOR = new BigDecimal("0.001");
 	public static final BigDecimal ENERGY_FACTOR = new BigDecimal("0.001");
@@ -34,20 +34,20 @@ public class PowerMeterModel {
 	public BigDecimal getPower() {
 		return power != null ? power.multiply(POWER_FACTOR) : BigDecimal.ZERO;
 	}
+
 	public void setPower(BigDecimal power) {
 		this.power = power;
 	}
+
 	public BigDecimal getEnergy() {
 		return energy != null ? energy.multiply(ENERGY_FACTOR) : BigDecimal.ZERO;
 	}
+
 	public void setEnergy(BigDecimal energy) {
 		this.energy = energy;
 	}
-	
+
 	public String toString() {
-		return new ToStringBuilder(this)
-		.append("power", this.getPower())
-		.append("energy", this.getEnergy())
-		.toString();
+		return new ToStringBuilder(this).append("power", this.getPower()).append("energy", this.getEnergy()).toString();
 	}
 }

@@ -10,9 +10,9 @@ package org.openhab.binding.avmfritz.internal.ahamodel;
 
 import java.util.ArrayList;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * This JAXB model class maps the XML response to an <b>getdevicelistinfos</b>

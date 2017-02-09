@@ -8,9 +8,19 @@
  */
 package org.openhab.binding.avmfritz.handler;
 
-import static org.openhab.binding.avmfritz.BindingConstants.*;
+import static org.openhab.binding.avmfritz.BindingConstants.BINDING_ID;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_ACTUALTEMP;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_BATTERY;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_COMFORTTEMP;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_ECOTEMP;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_ENERGY;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_NEXTCHANGE;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_NEXTTEMP;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_POWER;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_SETTEMP;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_SWITCH;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_TEMP;
 
-import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;

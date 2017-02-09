@@ -28,6 +28,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * </ol>
  * 
  * @author Robert Bausdorf
+ * @author Christoph Weitkamp
  * 
  * 
  */
