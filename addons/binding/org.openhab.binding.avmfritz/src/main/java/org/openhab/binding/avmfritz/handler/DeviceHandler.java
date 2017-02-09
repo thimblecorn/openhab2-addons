@@ -16,11 +16,13 @@ import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_ECOTEMP;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_ENERGY;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_NEXTCHANGE;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_NEXTTEMP;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_ONLINE;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_POWER;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_SETTEMP;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_SWITCH;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_TEMP;
 import static org.openhab.binding.avmfritz.BindingConstants.INPUT_BATTERY;
+import static org.openhab.binding.avmfritz.BindingConstants.INPUT_PRESENT;
 import static org.openhab.binding.avmfritz.BindingConstants.PL546E_STANDALONE_THING_TYPE;
 import static org.openhab.binding.avmfritz.BindingConstants.THING_AIN;
 
@@ -168,6 +170,11 @@ public class DeviceHandler extends BaseThingHandler implements IFritzHandler {
 		}
 		String ain = this.getThing().getConfiguration().get(THING_AIN).toString();
 		switch (channelUID.getIdWithoutGroup()) {
+		case CHANNEL_ONLINE:
+			if (command instanceof RefreshType) {
+				// not supported
+			}
+			break;
 		case CHANNEL_TEMP:
 			if (command instanceof RefreshType) {
 				fritzBox.getTemperature(ain);

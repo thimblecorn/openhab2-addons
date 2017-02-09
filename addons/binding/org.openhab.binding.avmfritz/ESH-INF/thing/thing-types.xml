@@ -12,6 +12,7 @@
         <label>Comet DECT</label>
         <description>Comet DECT heating thermostat</description>
         <channels>
+            <channel id="online" typeId="online" />
             <channel id="temperature" typeId="temperature" />
             <channel id="actual_temp" typeId="actual_temp" />
             <channel id="set_temp" typeId="set_temp" />
@@ -36,6 +37,7 @@
         <label>FRITZ!DECT 300</label>
         <description>FRITZ!DECT 300 heating thermostat</description>
         <channels>
+            <channel id="online" typeId="online" />
             <channel id="temperature" typeId="temperature" />
             <channel id="actual_temp" typeId="actual_temp" />
             <channel id="set_temp" typeId="set_temp" />

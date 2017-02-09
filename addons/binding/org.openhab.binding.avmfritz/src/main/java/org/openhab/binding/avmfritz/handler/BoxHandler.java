@@ -16,6 +16,7 @@ import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_ECOTEMP;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_ENERGY;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_NEXTCHANGE;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_NEXTTEMP;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_ONLINE;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_POWER;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_SETTEMP;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_SWITCH;
