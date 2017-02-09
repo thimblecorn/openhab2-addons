@@ -54,6 +54,13 @@ public class BindingConstants {
     public final static String CHANNEL_ENERGY = "energy";
     public final static String CHANNEL_POWER = "power";
     public final static String CHANNEL_SWITCH = "outlet";
+    public final static String CHANNEL_OUTLET_MODE = "outlet_mode";
+    public final static String CHANNEL_LOCKED = "locked";
+    public final static String CHANNEL_DEVICE_LOCKED = "device_locked";
+
+    public final static String INPUT_MODE = "mode";
+    public final static String INPUT_LOCKED = "lock";
+    public final static String INPUT_DEVICE_LOCKED = "device_lock";
 
     public final static Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = ImmutableSet.of(DECT100_THING_TYPE,
             DECT200_THING_TYPE, DECT210_THING_TYPE, PL546E_THING_TYPE, BRIDGE_THING_TYPE, PL546E_STANDALONE_THING_TYPE);

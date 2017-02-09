@@ -19,11 +19,11 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * See {@link DevicelistModel}.
  * 
  * @author Robert Bausdorf
- * 
+ * @author Christoph Weitkamp
  *
  */
 @XmlRootElement(name = "switch")
-@XmlType(propOrder = { "state", "mode", "lock"})
+@XmlType(propOrder = { "state", "mode", "lock", "device_lock"})
 public class SwitchModel {
 	public static final BigDecimal ON = BigDecimal.ONE;
 	public static final BigDecimal OFF = BigDecimal.ZERO;
@@ -31,6 +31,7 @@ public class SwitchModel {
 	private BigDecimal state;
 	private String mode;
 	private BigDecimal lock;
+	private BigDecimal device_lock;
 
 	public BigDecimal getState() {
 		return state;
@@ -56,12 +57,21 @@ public class SwitchModel {
 		this.lock = lock;
 	}
 
+	public BigDecimal getDeviceLock() {
+		return device_lock;
+	}
+	
+	public void setDeviceLock(BigDecimal lock) {
+		this.device_lock = lock;
+	}
+
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this)
 			.append("state", this.getState())
 			.append("mode", this.getMode())
 			.append("lock", this.getLock())
+			.append("device_lock", this.getDeviceLock())
 			.toString();
 	}
 }
