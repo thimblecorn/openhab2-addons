@@ -59,6 +59,7 @@ If correct credentials are set in the bridge configuration, connected AHA device
 
 | Channel Type ID | Item Type    | Description  | Available on thing |
 |-------------|--------|-----------------------------|------------------------------------|
+| online | Switch | States whether a device is online or not (ON/OFF) | all |
 | temperature | Number | Actual measured temperature (in °C) | FRITZ!DECT 210, FRITZ!DECT 200, FRITZ!DECT Repeater 100 |
 | energy | Number | Accumulated energy consumption (in Wh) | FRITZ!DECT 210, FRITZ!DECT 200, FRITZ!Powerline 546E |
 | power | Number | Current power consumption (in W) | FRITZ!DECT 210, FRITZ!DECT 200, FRITZ!Powerline 546E |
@@ -101,4 +102,22 @@ sitemap demo label="Main Menu"
 		Switch item=Outlet2
 	}
 }
+```
+
+## Tips & Tricks
+
+###Transformation for online status
+
+Use a map for showing whether a device is online or not (see [Transformation](http://docs.openhab.org/configuration/items.html#transforming)).
+
+online.map:
+```
+ON=online
+OFF=offline
+```
+
+demo.items:
+
+```
+Switch Online1 "Status [MAP(online.map):%s]" { channel="avmfritz:FRITZ_DECT_200:1:DECT1:online" }
 ```

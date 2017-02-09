@@ -14,6 +14,7 @@
         <description>FRITZ!DECT210 switchable outlet</description>
 
         <channels>
+            <channel id="online" typeId="online" />
             <channel id="temperature" typeId="temperature" />
             <channel id="energy" typeId="energy" />
             <channel id="power" typeId="power" />
@@ -37,6 +38,7 @@
         <description>FRITZ!DECT200 switchable outlet</description>
 
 		<channels>
+		    <channel id="online" typeId="online" />
 			<channel id="temperature" typeId="temperature" />
 			<channel id="energy" typeId="energy" />
 			<channel id="power" typeId="power" />
@@ -60,6 +62,7 @@
         <description>FRITZ!Powerline 546E with switchable outlet</description>
 
 		<channels>
+            <channel id="online" typeId="online" />
 			<channel id="energy" typeId="energy" />
 			<channel id="power" typeId="power" />
 			<channel id="outlet" typeId="outlet" />
@@ -78,6 +81,7 @@
         <description>FRITZ!Powerline 546E with switchable outlet</description>
 
 		<channels>
+            <channel id="online" typeId="online" />
 			<channel id="energy" typeId="energy" />
 			<channel id="power" typeId="power" />
 			<channel id="outlet" typeId="outlet" />
@@ -138,6 +142,7 @@
     	<label>FRITZ!DECT Repeater 100</label>
     	<description>FRITZ!DECT Repeater 100 DECT repeater</description>
     	<channels>
+            <channel id="online" typeId="online" />
     		<channel typeId="temperature" id="temperature"></channel>
     	</channels>
     	<config-description>
@@ -147,6 +152,13 @@
     </thing-type>
 
     <!-- Channel definitions of fritz devices -->
+    <channel-type id="online">
+        <item-type>Switch</item-type>
+        <label>Online</label>
+        <description>States whether a device is online or not.</description>
+        <category>Contact</category>
+        <state pattern="%s" readOnly="true"/>
+    </channel-type>
 	<channel-type id="temperature">
 		<item-type>Number</item-type>
 		<label>Actual Temperature</label>
