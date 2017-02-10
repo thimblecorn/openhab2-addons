@@ -173,7 +173,12 @@ public class BoxHandler extends BaseBridgeHandler implements IFritzHandler {
 			throw new IllegalArgumentException("thing or device null, cannot perform update");
 		}
 		Channel channelOnline = thing.getChannel(CHANNEL_ONLINE);
-		this.updateState(channelOnline.getUID(), (device.getPresent() == 1) ? OnOffType.ON : OnOffType.OFF);
+		if (channelOnline != null) {
+			this.updateState(channelOnline.getUID(), (device.getPresent() == 1) ? OnOffType.ON : OnOffType.OFF);
+		} else {
+			logger.warn("Channel {} in thing {} does not exist, please recreate the thing", CHANNEL_ONLINE,
+					thing.getUID());
+		}
 		if (device.getPresent() == 1) {
 			thing.setStatusInfo(new ThingStatusInfo(ThingStatus.ONLINE, ThingStatusDetail.NONE, null));
 			logger.debug("about to update thing {} from device {}", thing.getUID(), device.toString());
