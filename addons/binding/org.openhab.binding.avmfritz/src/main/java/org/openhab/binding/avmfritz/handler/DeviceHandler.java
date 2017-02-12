@@ -181,17 +181,17 @@ public class DeviceHandler extends BaseThingHandler implements IFritzHandler {
             if (thing != null) {
                 logger.debug("update thing " + thing.getUID() + " with device model: " + model.toString());
                 logger.debug("about to update " + thing.getUID() + " from " + model.toString());
-                if (model.isTempSensor()) {
+                if (model.isTempSensor() && (model.getTemperature() != null)) {
                     Channel channel = thing.getChannel(CHANNEL_TEMP);
                     this.updateState(channel.getUID(), new DecimalType(model.getTemperature().getCelsius()));
                 }
-                if (model.isPowermeter()) {
+                if (model.isPowermeter() && (model.getPowermeter() != null)) {
                     Channel channelEnergy = thing.getChannel(CHANNEL_ENERGY);
                     this.updateState(channelEnergy.getUID(), new DecimalType(model.getPowermeter().getEnergy()));
                     Channel channelPower = thing.getChannel(CHANNEL_POWER);
                     this.updateState(channelPower.getUID(), new DecimalType(model.getPowermeter().getPower()));
                 }
-                if (model.isSwitchableOutlet()) {
+                if (model.isSwitchableOutlet() && (model.getSwitch() != null)) {
                     Channel channel = thing.getChannel(CHANNEL_SWITCH);
                     if (model.getSwitch().getState().equals(SwitchModel.ON)) {
                         this.updateState(channel.getUID(), OnOffType.ON);
