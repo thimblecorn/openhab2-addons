@@ -105,7 +105,7 @@ public class FritzAhaReauthCallback implements FritzAhaCallback {
 	public void execute(int status, String response) {
 		if (status != 200 || "".equals(response) || ".".equals(response)) {
 			validRequest = false;
-			if (retries >= 1) {
+			while (retries >= 1) {
 				webIface.authenticate();
 				retries--;
 				if (httpMethod == Method.GET) {
@@ -114,8 +114,9 @@ public class FritzAhaReauthCallback implements FritzAhaCallback {
 					webIface.asyncPost(path, args, retryCallback);
 				}
 			}
-		} else
+		} else {
 			validRequest = true;
+		}
 	}
 
 	/**

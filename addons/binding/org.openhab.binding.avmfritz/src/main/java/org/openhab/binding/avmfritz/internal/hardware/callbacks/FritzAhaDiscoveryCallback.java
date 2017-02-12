@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
  * Callback for discovering SmartHome devices connected to a FRITZ!Box
  * 
  * @author Robert Bausdorf
+ * @author Christoph Weitkamp
  * 
  */
 public class FritzAhaDiscoveryCallback extends FritzAhaReauthCallback {
@@ -51,8 +52,8 @@ public class FritzAhaDiscoveryCallback extends FritzAhaReauthCallback {
 	@Override
 	public void execute(int status, String response) {
 		super.execute(status, response);
+		logger.trace("Received discovery callback response: " + response);
 		if (this.isValidRequest()) {
-			logger.debug("discovery callback response " + response);
 			try {
 				JAXBContext jaxbContext = JAXBContext.newInstance(DevicelistModel.class);
 				Unmarshaller jaxbUM = jaxbContext.createUnmarshaller();
@@ -60,7 +61,7 @@ public class FritzAhaDiscoveryCallback extends FritzAhaReauthCallback {
 				DevicelistModel model = (DevicelistModel) jaxbUM.unmarshal(new StringReader(response));
 				if (model != null) {
 					for (DeviceModel device : model.getDevicelist()) {
-						this.service.onDeviceAddedInternal(device);
+						service.onDeviceAddedInternal(device);
 					}
 				} else {
 					logger.warn("no model in response");
@@ -68,6 +69,8 @@ public class FritzAhaDiscoveryCallback extends FritzAhaReauthCallback {
 			} catch (JAXBException e) {
 				logger.error(e.getLocalizedMessage(), e);
 			}
+		} else {
+			logger.info("request is invalid: " + status);
 		}
 	}
 }

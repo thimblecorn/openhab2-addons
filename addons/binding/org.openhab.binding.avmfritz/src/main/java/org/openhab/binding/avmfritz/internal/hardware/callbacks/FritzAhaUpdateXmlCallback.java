@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
  * response. Supports reauthorization.
  * 
  * @author Robert Bausdorf
+ * @author Christoph Weitkamp
  * 
  */
 public class FritzAhaUpdateXmlCallback extends FritzAhaReauthCallback {
@@ -43,8 +44,11 @@ public class FritzAhaUpdateXmlCallback extends FritzAhaReauthCallback {
 
 	/**
 	 * Constructor
-	 * @param webIface Webinterface to FRITZ!Box
-	 * @param handler Bridge handler taht will update things.
+	 * 
+	 * @param webIface
+	 *            Webinterface to FRITZ!Box
+	 * @param handler
+	 *            Bridge handler taht will update things.
 	 */
 	public FritzAhaUpdateXmlCallback(FritzahaWebInterface webIface, IFritzHandler handler) {
 		super(WEBSERVICE_PATH, "switchcmd=getdevicelistinfos", webIface, Method.GET, 1);
@@ -54,23 +58,21 @@ public class FritzAhaUpdateXmlCallback extends FritzAhaReauthCallback {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void execute(int status, String response) {
 		super.execute(status, response);
+		logger.trace("Received update callback response: " + response);
 		if (this.isValidRequest()) {
-			logger.trace("Received State response " + response);
 			try {
-				JAXBContext jaxbContext = JAXBContext
-						.newInstance(DevicelistModel.class);
+				JAXBContext jaxbContext = JAXBContext.newInstance(DevicelistModel.class);
 				Unmarshaller jaxbUM = jaxbContext.createUnmarshaller();
 
-				DevicelistModel model = (DevicelistModel) jaxbUM
-						.unmarshal(new StringReader(response));
-				if( model != null ) {
-					for( DeviceModel device : model.getDevicelist() ) {
+				DevicelistModel model = (DevicelistModel) jaxbUM.unmarshal(new StringReader(response));
+				if (model != null) {
+					for (DeviceModel device : model.getDevicelist()) {
 						handler.addDeviceList(device);
 					}
-					handler.setStatusInfo(ThingStatus.ONLINE, 
-							ThingStatusDetail.NONE, "FritzBox online");
+					handler.setStatusInfo(ThingStatus.ONLINE, ThingStatusDetail.NONE, "FritzBox online");
 				} else {
 					logger.warn("no model in response");
 				}
