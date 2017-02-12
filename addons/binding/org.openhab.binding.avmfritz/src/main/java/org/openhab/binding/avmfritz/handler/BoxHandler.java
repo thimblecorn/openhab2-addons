@@ -12,11 +12,14 @@ import static org.openhab.binding.avmfritz.BindingConstants.BINDING_ID;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_ACTUALTEMP;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_BATTERY;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_COMFORTTEMP;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_DEVICE_LOCKED;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_ECOTEMP;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_ENERGY;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_LOCKED;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_NEXTCHANGE;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_NEXTTEMP;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_ONLINE;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_OUTLET_MODE;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_POWER;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_SETTEMP;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_SWITCH;
@@ -32,6 +35,7 @@ import java.util.concurrent.TimeUnit;
 import org.eclipse.smarthome.core.library.types.DateTimeType;
 import org.eclipse.smarthome.core.library.types.DecimalType;
 import org.eclipse.smarthome.core.library.types.OnOffType;
+import org.eclipse.smarthome.core.library.types.StringType;
 import org.eclipse.smarthome.core.thing.Bridge;
 import org.eclipse.smarthome.core.thing.Channel;
 import org.eclipse.smarthome.core.thing.ChannelUID;
@@ -203,6 +207,45 @@ public class BoxHandler extends BaseBridgeHandler implements IFritzHandler {
 				} else {
 					logger.warn("Received unknown value {} for channel {}", device.getSwitch().getState(),
 							channelSwitch.getUID());
+				}
+				Channel channelMode = thing.getChannel(CHANNEL_OUTLET_MODE);
+				if (channelMode != null) {
+					this.updateState(channelMode.getUID(), new StringType(device.getSwitch().getMode()));
+				} else {
+					logger.warn("Channel {} in thing {} does not exist, please recreate the thing", CHANNEL_OUTLET_MODE,
+							thing.getUID());
+				}
+				Channel channelLocked = thing.getChannel(CHANNEL_LOCKED);
+				if (channelLocked != null) {
+					if (device.getSwitch().getLock() == null) {
+						this.updateState(channelLocked.getUID(), UnDefType.UNDEF);
+					} else if (device.getSwitch().getLock().equals(SwitchModel.ON)) {
+						this.updateState(channelLocked.getUID(), OnOffType.ON);
+					} else if (device.getSwitch().getLock().equals(SwitchModel.OFF)) {
+						this.updateState(channelLocked.getUID(), OnOffType.OFF);
+					} else {
+						logger.warn("Unknown state {} for channel {}", device.getSwitch().getLock(),
+								channelLocked.getUID());
+					}
+				} else {
+					logger.warn("Channel {} in thing {} does not exist, please recreate the thing", CHANNEL_LOCKED,
+							thing.getUID());
+				}
+				Channel channelDeviceLocked = thing.getChannel(CHANNEL_DEVICE_LOCKED);
+				if (channelDeviceLocked != null) {
+					if (device.getSwitch().getDevicelock() == null) {
+						this.updateState(channelDeviceLocked.getUID(), UnDefType.UNDEF);
+					} else if (device.getSwitch().getDevicelock().equals(SwitchModel.ON)) {
+						this.updateState(channelDeviceLocked.getUID(), OnOffType.ON);
+					} else if (device.getSwitch().getDevicelock().equals(SwitchModel.OFF)) {
+						this.updateState(channelDeviceLocked.getUID(), OnOffType.OFF);
+					} else {
+						logger.warn("Unknown state {} for channel {}", device.getSwitch().getDevicelock(),
+								channelDeviceLocked.getUID());
+					}
+				} else {
+					logger.warn("Channel {} in thing {} does not exist, please recreate the thing",
+							CHANNEL_DEVICE_LOCKED, thing.getUID());
 				}
 			}
 			if (device.isHeatingThermostat() && device.getHkr() != null) {

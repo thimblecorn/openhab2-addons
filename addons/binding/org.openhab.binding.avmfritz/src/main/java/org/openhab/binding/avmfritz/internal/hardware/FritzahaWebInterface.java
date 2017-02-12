@@ -8,12 +8,9 @@
  */
 package org.openhab.binding.avmfritz.internal.hardware;
 
-import static org.openhab.binding.avmfritz.BindingConstants.THING_AIN;
-
-import java.math.BigDecimal;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeUnit;
@@ -29,7 +26,6 @@ import org.eclipse.smarthome.core.thing.ThingStatusDetail;
 import org.eclipse.smarthome.io.net.http.HttpUtil;
 import org.openhab.binding.avmfritz.config.AvmFritzConfiguration;
 import org.openhab.binding.avmfritz.handler.IFritzHandler;
-import org.openhab.binding.avmfritz.internal.ahamodel.HeatingModel;
 import org.openhab.binding.avmfritz.internal.hardware.callbacks.FritzAhaCallback;
 import org.openhab.binding.avmfritz.internal.hardware.callbacks.FritzAhaSetHeatingTemperatureCallback;
 import org.openhab.binding.avmfritz.internal.hardware.callbacks.FritzAhaSetSwitchCallback;
@@ -41,6 +37,7 @@ import org.slf4j.LoggerFactory;
  * AVM home automation devices. It manages authentication and wraps commands.
  * 
  * @author Robert Bausdorf, Christian Brauers
+ * @author Christoph Weitkamp
  * 
  */
 public class FritzahaWebInterface {
@@ -314,41 +311,55 @@ public class FritzahaWebInterface {
 		return postExchange;
 	}
 
+	// switchcmd=getswitchpresent
+	public FritzahaContentExchange getPresent(String ain) {
+		return null;
+	}
+
+	// switchcmd=gettemperature
 	public FritzahaContentExchange getTemperature(String ain) {
 		return null;
 	}
 
+	// switchcmd=getswitchenergy
 	public FritzahaContentExchange getEnergy(String ain) {
 		return null;
 	}
 
+	// switchcmd=getswitchpower
 	public FritzahaContentExchange getPower(String ain) {
 		return null;
 	}
 
+	// switchcmd=getswitchstate
 	public FritzahaContentExchange getSwitch(String ain) {
 		return null;
 	}
 
+	// switchcmd={setswitchon|setswitchoff}
 	public FritzahaContentExchange setSwitch(String ain, boolean switchOn) {
 		FritzAhaSetSwitchCallback callback = new FritzAhaSetSwitchCallback(this, ain, switchOn);
 		return this.asyncGet(callback);
 	}
 
+	// switchcmd=gethkrtsoll
 	public FritzahaContentExchange getSetTemp(String ain) {
 		return null;
 	}
 
+	// switchcmd=sethkrtsoll
 	public FritzahaContentExchange setSetTemp(String ain, BigDecimal temperature) {
 		FritzAhaSetHeatingTemperatureCallback callback = new FritzAhaSetHeatingTemperatureCallback(this, ain,
 				temperature);
 		return this.asyncGet(callback);
 	}
 
+	// switchcmd=gethkrabsenk
 	public FritzahaContentExchange getEcoTemp(String ain) {
 		return null;
 	}
 
+	// switchcmd=gethkrkomfort
 	public FritzahaContentExchange getComfortTemp(String ain) {
 		return null;
 	}

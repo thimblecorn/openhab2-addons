@@ -12,11 +12,14 @@ import static org.openhab.binding.avmfritz.BindingConstants.BINDING_ID;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_ACTUALTEMP;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_BATTERY;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_COMFORTTEMP;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_DEVICE_LOCKED;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_ECOTEMP;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_ENERGY;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_LOCKED;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_NEXTCHANGE;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_NEXTTEMP;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_ONLINE;
+import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_OUTLET_MODE;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_POWER;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_SETTEMP;
 import static org.openhab.binding.avmfritz.BindingConstants.CHANNEL_SWITCH;
@@ -35,6 +38,7 @@ import java.util.concurrent.TimeUnit;
 import org.eclipse.smarthome.core.library.types.DateTimeType;
 import org.eclipse.smarthome.core.library.types.DecimalType;
 import org.eclipse.smarthome.core.library.types.OnOffType;
+import org.eclipse.smarthome.core.library.types.StringType;
 import org.eclipse.smarthome.core.thing.Bridge;
 import org.eclipse.smarthome.core.thing.Channel;
 import org.eclipse.smarthome.core.thing.ChannelUID;
@@ -172,7 +176,7 @@ public class DeviceHandler extends BaseThingHandler implements IFritzHandler {
 		switch (channelUID.getIdWithoutGroup()) {
 		case CHANNEL_ONLINE:
 			if (command instanceof RefreshType) {
-				// not supported
+				fritzBox.getPresent(ain);
 			}
 			break;
 		case CHANNEL_TEMP:
@@ -197,6 +201,9 @@ public class DeviceHandler extends BaseThingHandler implements IFritzHandler {
 				fritzBox.getSwitch(ain);
 			}
 			break;
+		case CHANNEL_OUTLET_MODE:
+		case CHANNEL_LOCKED:
+		case CHANNEL_DEVICE_LOCKED:
 		case CHANNEL_ACTUALTEMP:
 			if (command instanceof RefreshType) {
 				// not supported
@@ -293,6 +300,26 @@ public class DeviceHandler extends BaseThingHandler implements IFritzHandler {
 					} else {
 						logger.warn("Received unknown value {} for channel {}", device.getSwitch().getState(),
 								CHANNEL_SWITCH);
+					}
+					this.updateState(CHANNEL_OUTLET_MODE, new StringType(device.getSwitch().getMode()));
+					if (device.getSwitch().getLock() == null) {
+						this.updateState(CHANNEL_LOCKED, UnDefType.UNDEF);
+					} else if (device.getSwitch().getLock().equals(SwitchModel.ON)) {
+						this.updateState(CHANNEL_LOCKED, OnOffType.ON);
+					} else if (device.getSwitch().getLock().equals(SwitchModel.OFF)) {
+						this.updateState(CHANNEL_LOCKED, OnOffType.OFF);
+					} else {
+						logger.warn("Unknown state {} for channel {}", device.getSwitch().getLock(), CHANNEL_LOCKED);
+					}
+					if (device.getSwitch().getDevicelock() == null) {
+						this.updateState(CHANNEL_DEVICE_LOCKED, UnDefType.UNDEF);
+					} else if (device.getSwitch().getDevicelock().equals(SwitchModel.ON)) {
+						this.updateState(CHANNEL_DEVICE_LOCKED, OnOffType.ON);
+					} else if (device.getSwitch().getDevicelock().equals(SwitchModel.OFF)) {
+						this.updateState(CHANNEL_DEVICE_LOCKED, OnOffType.OFF);
+					} else {
+						logger.warn("Unknown state {} for channel {}", device.getSwitch().getDevicelock(),
+								CHANNEL_DEVICE_LOCKED);
 					}
 				}
 				if (device.isHeatingThermostat() && device.getHkr() != null) {

@@ -59,6 +59,9 @@ public class BindingConstants {
 	public final static String CHANNEL_ENERGY = "energy";
 	public final static String CHANNEL_POWER = "power";
 	public final static String CHANNEL_SWITCH = "outlet";
+    public final static String CHANNEL_OUTLET_MODE = "outlet_mode";
+    public final static String CHANNEL_LOCKED = "locked";
+    public final static String CHANNEL_DEVICE_LOCKED = "device_locked";
 	public final static String CHANNEL_ACTUALTEMP = "actual_temp";
 	public final static String CHANNEL_SETTEMP = "set_temp";
 	public final static String CHANNEL_ECOTEMP = "eco_temp";
@@ -69,6 +72,9 @@ public class BindingConstants {
 
 	// List of all Input tags
 	public final static String INPUT_PRESENT = "present";
+    public final static String INPUT_MODE = "mode";
+    public final static String INPUT_LOCKED = "lock";
+    public final static String INPUT_DEVICE_LOCKED = "device_lock";
 	public final static String INPUT_ACTUALTEMP = "tist";
 	public final static String INPUT_SETTEMP = "tsoll";
 	public final static String INPUT_ECOTEMP = "absenk";

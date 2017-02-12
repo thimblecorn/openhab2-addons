@@ -33,6 +33,8 @@ public class HeatingModel {
 	public static final BigDecimal TEMP_ON = new BigDecimal("254.0");
 	public static final BigDecimal BATTERY_OFF = BigDecimal.ZERO;
 	public static final BigDecimal BATTERY_ON = BigDecimal.ONE;
+	public static final BigDecimal ON = BigDecimal.ONE;
+	public static final BigDecimal OFF = BigDecimal.ZERO;
 
 	protected BigDecimal tist;
 	protected BigDecimal tsoll;
@@ -127,8 +129,8 @@ public class HeatingModel {
 	public String toString() {
 		return new ToStringBuilder(this).append("tist", this.getTist()).append("tsoll", this.getTsoll())
 				.append("absenk", this.getAbsenk()).append("komfort", this.getKomfort()).append("lock", this.getLock())
-				.append("errorcode", this.getErrorcode()).append("batterylow", this.getBatterylow())
-				.append("nextchange", this.getNextchange()).toString();
+				.append("devicelock", this.getDevicelock()).append("errorcode", this.getErrorcode())
+				.append("batterylow", this.getBatterylow()).append("nextchange", this.getNextchange()).toString();
 	}
 
 	@XmlType(name = "", propOrder = { "endperiod", "tchange" })
