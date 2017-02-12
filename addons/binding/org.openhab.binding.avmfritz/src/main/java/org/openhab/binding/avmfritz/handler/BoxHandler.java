@@ -40,6 +40,7 @@ import org.slf4j.LoggerFactory;
  * Handler for a FRITZ!Box device. Handles polling of values from AHA devices.
  *
  * @author Robert Bausdorf
+ * @author Christoph Weitkamp
  *
  */
 public class BoxHandler extends BaseBridgeHandler implements IFritzHandler {
@@ -157,17 +158,17 @@ public class BoxHandler extends BaseBridgeHandler implements IFritzHandler {
         if (device.getPresent() == 1) {
             thing.setStatusInfo(new ThingStatusInfo(ThingStatus.ONLINE, ThingStatusDetail.NONE, null));
             logger.debug("about to update " + thing.getUID() + " from " + device.toString());
-            if (device.isTempSensor()) {
+            if (device.isTempSensor() && (device.getTemperature() != null)) {
                 Channel channel = thing.getChannel(CHANNEL_TEMP);
                 this.updateState(channel.getUID(), new DecimalType(device.getTemperature().getCelsius()));
             }
-            if (device.isPowermeter()) {
+            if (device.isPowermeter() && (device.getPowermeter() != null)) {
                 Channel channelEnergy = thing.getChannel(CHANNEL_ENERGY);
                 this.updateState(channelEnergy.getUID(), new DecimalType(device.getPowermeter().getEnergy()));
                 Channel channelPower = thing.getChannel(CHANNEL_POWER);
                 this.updateState(channelPower.getUID(), new DecimalType(device.getPowermeter().getPower()));
             }
-            if (device.isSwitchableOutlet()) {
+            if (device.isSwitchableOutlet() && (device.getSwitch() != null)) {
                 Channel channel = thing.getChannel(CHANNEL_SWITCH);
                 if (device.getSwitch().getState().equals(SwitchModel.ON)) {
                     this.updateState(channel.getUID(), OnOffType.ON);
