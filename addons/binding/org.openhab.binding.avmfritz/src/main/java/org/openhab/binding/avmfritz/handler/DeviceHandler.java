@@ -176,32 +176,32 @@ public class DeviceHandler extends BaseThingHandler implements IFritzHandler {
 	}
 
 	@Override
-	public void addDeviceList(DeviceModel model) {
+	public void addDeviceList(DeviceModel device) {
 		try {
-			logger.debug("set device model: " + model.toString());
+			logger.debug("set device model: " + device.toString());
 			Thing thing = this.getThing();
 			if (thing != null) {
-				logger.debug("update thing " + thing.getUID() + " with device model: " + model.toString());
-				logger.debug("about to update " + thing.getUID() + " from " + model.toString());
-				if (model.isTempSensor()) {
+				logger.debug("update thing " + thing.getUID() + " with device model: " + device.toString());
+				logger.debug("about to update " + thing.getUID() + " from " + device.toString());
+				if (device.isTempSensor()) {
 					Channel channel = thing.getChannel(CHANNEL_TEMP);
-					this.updateState(channel.getUID(), new DecimalType(model.getTemperature().getCelsius()));
+					this.updateState(channel.getUID(), new DecimalType(device.getTemperature().getCelsius()));
 				}
-				if (model.isPowermeter()) {
+				if (device.isPowermeter()) {
 					Channel channelEnergy = thing.getChannel(CHANNEL_ENERGY);
-					this.updateState(channelEnergy.getUID(), new DecimalType(model.getPowermeter().getEnergy()));
+					this.updateState(channelEnergy.getUID(), new DecimalType(device.getPowermeter().getEnergy()));
 					Channel channelPower = thing.getChannel(CHANNEL_POWER);
-					this.updateState(channelPower.getUID(), new DecimalType(model.getPowermeter().getPower()));
+					this.updateState(channelPower.getUID(), new DecimalType(device.getPowermeter().getPower()));
 				}
-				if (model.isSwitchableOutlet()) {
+				if (device.isSwitchableOutlet()) {
 					Channel channel = thing.getChannel(CHANNEL_SWITCH);
-					if (model.getSwitch().getState().equals(SwitchModel.ON)) {
+					if (device.getSwitch().getState().equals(SwitchModel.ON)) {
 						this.updateState(channel.getUID(), OnOffType.ON);
-					} else if (model.getSwitch().getState().equals(SwitchModel.OFF)) {
+					} else if (device.getSwitch().getState().equals(SwitchModel.OFF)) {
 						this.updateState(channel.getUID(), OnOffType.OFF);
 					} else {
 						logger.warn(
-								"unknown state " + model.getSwitch().getState() + " for channel " + channel.getUID());
+								"unknown state " + device.getSwitch().getState() + " for channel " + channel.getUID());
 					}
 					this.updateState(CHANNEL_OUTLET_MODE, new StringType(device.getSwitch().getMode()));
 					if (device.getSwitch().getLock() == null) {
@@ -226,7 +226,7 @@ public class DeviceHandler extends BaseThingHandler implements IFritzHandler {
 				}
 				// save AIN to config for PL546E standalone
 				if (thing.getConfiguration().get(THING_AIN) == null) {
-					thing.getConfiguration().put(THING_AIN, model.getIdentifier());
+					thing.getConfiguration().put(THING_AIN, device.getIdentifier());
 				}
 			}
 		} catch (Exception e) {

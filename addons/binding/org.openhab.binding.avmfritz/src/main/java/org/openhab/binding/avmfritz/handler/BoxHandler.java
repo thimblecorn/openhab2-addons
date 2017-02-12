@@ -179,27 +179,42 @@ public class BoxHandler extends BaseBridgeHandler implements IFritzHandler {
 					logger.warn("unknown state " + device.getSwitch().getState() + " for channel " + channel.getUID());
 				}
 				Channel channelMode = thing.getChannel(CHANNEL_OUTLET_MODE);
-				this.updateState(channelMode.getUID(), new StringType(device.getSwitch().getMode()));
-				Channel channelLocked = thing.getChannel(CHANNEL_LOCKED);
-				if (device.getSwitch().getLock() == null) {
-					this.updateState(channelLocked.getUID(), UnDefType.UNDEF);
-				} else if (device.getSwitch().getLock().equals(SwitchModel.ON)) {
-					this.updateState(channelLocked.getUID(), OnOffType.ON);
-				} else if (device.getSwitch().getLock().equals(SwitchModel.OFF)) {
-					this.updateState(channelLocked.getUID(), OnOffType.OFF);
+				if (channelMode != null) {
+					this.updateState(channelMode.getUID(), new StringType(device.getSwitch().getMode()));
 				} else {
-					logger.warn("Unknown state {} for channel {}", device.getSwitch().getLock(), channel.getUID());
+					logger.warn("Channel {} in thing {} does not exist, please recreate the thing", CHANNEL_OUTLET_MODE,
+							thing.getUID());
+				}
+				Channel channelLocked = thing.getChannel(CHANNEL_LOCKED);
+				if (channelLocked != null) {
+					if (device.getSwitch().getLock() == null) {
+						this.updateState(channelLocked.getUID(), UnDefType.UNDEF);
+					} else if (device.getSwitch().getLock().equals(SwitchModel.ON)) {
+						this.updateState(channelLocked.getUID(), OnOffType.ON);
+					} else if (device.getSwitch().getLock().equals(SwitchModel.OFF)) {
+						this.updateState(channelLocked.getUID(), OnOffType.OFF);
+					} else {
+						logger.warn("Unknown state {} for channel {}", device.getSwitch().getLock(), channel.getUID());
+					}
+				} else {
+					logger.warn("Channel {} in thing {} does not exist, please recreate the thing", CHANNEL_LOCKED,
+							thing.getUID());
 				}
 				Channel channelDeviceLocked = thing.getChannel(CHANNEL_DEVICE_LOCKED);
-				if (device.getSwitch().getDeviceLock() == null) {
-					this.updateState(channelDeviceLocked.getUID(), UnDefType.UNDEF);
-				} else if (device.getSwitch().getDeviceLock().equals(SwitchModel.ON)) {
-					this.updateState(channelDeviceLocked.getUID(), OnOffType.ON);
-				} else if (device.getSwitch().getDeviceLock().equals(SwitchModel.OFF)) {
-					this.updateState(channelDeviceLocked.getUID(), OnOffType.OFF);
+				if (channelDeviceLocked != null) {
+					if (device.getSwitch().getDeviceLock() == null) {
+						this.updateState(channelDeviceLocked.getUID(), UnDefType.UNDEF);
+					} else if (device.getSwitch().getDeviceLock().equals(SwitchModel.ON)) {
+						this.updateState(channelDeviceLocked.getUID(), OnOffType.ON);
+					} else if (device.getSwitch().getDeviceLock().equals(SwitchModel.OFF)) {
+						this.updateState(channelDeviceLocked.getUID(), OnOffType.OFF);
+					} else {
+						logger.warn("Unknown state {} for channel {}", device.getSwitch().getDeviceLock(),
+								channel.getUID());
+					}
 				} else {
-					logger.warn("Unknown state {} for channel {}", device.getSwitch().getDeviceLock(),
-							channel.getUID());
+					logger.warn("Channel {} in thing {} does not exist, please recreate the thing",
+							CHANNEL_DEVICE_LOCKED, thing.getUID());
 				}
 			}
 		} else {
