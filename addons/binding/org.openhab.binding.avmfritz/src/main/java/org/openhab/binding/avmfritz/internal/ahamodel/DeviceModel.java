@@ -61,10 +61,13 @@ public class DeviceModel {
 	@XmlElement(name = "name")
 	private String name;
 	
+	@XmlElement(name = "switch")
 	private SwitchModel switchModel;
 	
+	@XmlElement(name = "powermeter")
 	private PowerMeterModel powermeterModel;
 
+	@XmlElement(name = "temperature")
 	private TemperatureModel temperatureModel;
 
 	public PowerMeterModel getPowermeter() {
