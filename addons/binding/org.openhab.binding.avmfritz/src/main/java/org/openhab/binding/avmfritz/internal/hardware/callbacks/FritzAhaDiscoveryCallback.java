@@ -10,7 +10,6 @@ package org.openhab.binding.avmfritz.internal.hardware.callbacks;
 
 import java.io.StringReader;
 
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
@@ -25,20 +24,30 @@ import org.slf4j.LoggerFactory;
  * Callback for discovering SmartHome devices connected to a FRITZ!Box
  * 
  * @author Robert Bausdorf
+ * @author Christoph Weitkamp
  * 
  */
-public class FritzAhaDiscoveryCallback extends FritzAhaReauthCallback {
+public class FritzAhaDiscoveryCallback extends FritzAhaXMLCallback {
+	/**
+	 * logger
+	 */
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+
+	/**
+	 * Handler to update
+	 */
 	private AvmDiscoveryService service;
 
 	/**
 	 * Constructor
-	 * @param webIface Webinterface to FRITZ!Box
-	 * @param service Discovery service to call with result.
+	 * 
+	 * @param webIface
+	 *            Webinterface to FRITZ!Box
+	 * @param service
+	 *            Discovery service to call with result.
 	 */
 	public FritzAhaDiscoveryCallback(FritzahaWebInterface webIface, AvmDiscoveryService service) {
-		super("webservices/homeautoswitch.lua", "switchcmd=getdevicelistinfos", webIface, Method.GET, 1);
+		super(WEBSERVICE_PATH, "switchcmd=getdevicelistinfos", webIface, Method.GET, 1);
 		this.service = service;
 	}
 
@@ -48,19 +57,14 @@ public class FritzAhaDiscoveryCallback extends FritzAhaReauthCallback {
 	@Override
 	public void execute(int status, String response) {
 		super.execute(status, response);
+		logger.trace("Received discovery callback response: " + response);
 		if (this.isValidRequest()) {
-			logger.debug("discovery callback response " + response);
 			try {
-				JAXBContext jaxbContext = JAXBContext
-						.newInstance(DevicelistModel.class);
-				Unmarshaller jaxbUM = jaxbContext.createUnmarshaller();
-
-				DevicelistModel model = (DevicelistModel) jaxbUM
-						.unmarshal(new StringReader(response));
-				if( model != null ) {
-					for( DeviceModel device : model.getDevicelist() )
-					{
-						this.service.onDeviceAddedInternal(device);
+				Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+				DevicelistModel model = (DevicelistModel) jaxbUnmarshaller.unmarshal(new StringReader(response));
+				if (model != null) {
+					for (DeviceModel device : model.getDevicelist()) {
+						service.onDeviceAddedInternal(device);
 					}
 				} else {
 					logger.warn("no model in response");
@@ -68,6 +72,8 @@ public class FritzAhaDiscoveryCallback extends FritzAhaReauthCallback {
 			} catch (JAXBException e) {
 				logger.error(e.getLocalizedMessage(), e);
 			}
+		} else {
+			logger.info("request is invalid: " + status);
 		}
 	}
 }
