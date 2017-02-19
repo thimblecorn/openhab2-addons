@@ -328,7 +328,11 @@ public class DeviceHandler extends BaseThingHandler implements IFritzHandler {
 					this.updateEcoTempChannel(device.getHkr().getAbsenk());
 					this.updateComfortTempChannel(device.getHkr().getKomfort());
 					if (device.getHkr().getNextchange() != null) {
-						this.updateNextChangeChannel(device.getHkr().getNextchange().getEndperiod());
+						if (device.getHkr().getNextchange().getEndperiod() == 0) {
+							this.updateState(CHANNEL_NEXTCHANGE, UnDefType.UNDEF);
+						} else {
+							this.updateNextChangeChannel(device.getHkr().getNextchange().getEndperiod());
+						}
 						this.updateNextTempChannel(device.getHkr().getNextchange().getTchange());
 					}
 					if (device.getHkr().getBatterylow() == null) {
